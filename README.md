@@ -99,11 +99,11 @@ Actions rely on mock data defined in the `src/assets/mock-data.json` file.
 ## Roadmap
 
 1. Planning
-  * Project structure
+    * Project structure
 2. Setup of Angular application
-  * Router & views: home (with option to display list of favorite contacts), create, edit and details page
-  * Services: DataService, MockApiService
-  * Base (index.html, root styles and fonts)
+    * Router & views: home (with option to display list of favorite contacts), create, edit and details page
+    * Services: DataService, MockApiService
+    * Base (index.html, root styles and fonts)
 3. List of all and favorite contacts on home page
 4. Search functionality on home page (by full name)
 5. Loading indicator (LoadingIndicatorComponent)
@@ -114,8 +114,8 @@ Actions rely on mock data defined in the `src/assets/mock-data.json` file.
 10. Delete functionality (DeleteDialogComponent, DeleteDialogService)
 11. Snackbar notifications (SnackbarComponent, SnackbarService)
 12. E2E tests (experimental)
-  * Implement helper methods
-  * Implement user actions
+    * Implement helper methods
+    * Implement user actions
 
 ### Guidelines
 
