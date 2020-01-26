@@ -1,5 +1,8 @@
-<nav>
-  <a routerLink="/" routerLinkActive="active">All contacts</a>
-  <a routerLink="/favorites" routerLinkActive="active">My favorites</a>
-</nav>
+<div class="nav-container">
+  <nav>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">All contacts</a>
+    <span class="separator"></span>
+    <a routerLink="/favorites" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">My favorites</a>
+  </nav>
+</div>
 <router-outlet></router-outlet>

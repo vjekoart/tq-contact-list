@@ -17,11 +17,18 @@ html {
   height: 100%;
 
   font-family: $font-family-base;
-  font-size: $font-size-base;
-  line-height: $line-height-base;
+  font-size: 14px;
+  line-height: 17px;
 
   background-color: $color-white;
   color: $color-black;
+}
+
+@media (min-width: $breakpoint) {
+  html {
+    font-size: 18px;
+    line-height: 22px;
+  }
 }
 
 body {

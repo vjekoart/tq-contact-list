@@ -8,11 +8,29 @@ header {
   align-items: center;
 
   width: 100%;
-  height: 60px;
+  height: 50px;
 
   background-color: $color-gradient-dark;
   background-image: $header-background;
   //box-shadow: $header-shadow;
+}
+
+@media (min-width: $breakpoint) {
+  header {
+    height: 60px;
+  }
+}
+
+#logo {
+  display: block;
+
+  width: 150px;
+}
+
+@media (min-width: $breakpoint) {
+  #logo {
+    width: 180px;
+  }
 }
 
 .bottom-line {
@@ -28,8 +46,7 @@ header {
   //box-shadow: $header-shadow;
 }
 
-#logo {
-  display: block;
-
-  width: 180px;
+main {
+  max-width: 1440px;
+  margin: 0 auto;
 }
