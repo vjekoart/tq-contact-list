@@ -17,6 +17,16 @@ nav {
 
   text-align: center;
 
+  :first-child {
+    width: 110px;
+    text-align: right;
+  }
+
+  :last-child {
+    width: 110px;
+    text-align: left;
+  }
+
   > * {
     vertical-align: middle;
   }

@@ -6,14 +6,37 @@
   padding: 0 8px;
   margin: 0 auto;
 
-  > *:not(:last-child) {
+  > * {
     display: block;
     margin-bottom: 10px;
   }
 }
 
-@media (min-width: $breakpoint) {
+@media (min-width: $breakpoint-small) {
   .contact-list-container {
-    padding: 0 137px;
+    overflow: hidden;
+    padding: 0 122px; // +47px
+
+    > * {
+      width: calc(50% - 30px);
+      margin: 15px;
+      float: left;
+    }
+  }
+}
+
+@media (min-width: $breakpoint-middle) {
+  .contact-list-container {
+    > * {
+      width: calc(33.33% - 30px);
+    }
+  }
+}
+
+@media (min-width: $breakpoint-big) {
+  .contact-list-container {
+    > * {
+      width: calc(25% - 30px);
+    }
   }
 }

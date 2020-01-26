@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-export interface ToggleFavoriteEvent {
+export interface FavoriteContactEvent {
   id: number;
   favorite: boolean;
 }
@@ -12,13 +12,13 @@ export interface ToggleFavoriteEvent {
 })
 export class ContactBoxComponent implements OnInit {
   @Input('detailsLink') contactDetailsLink: string;
-  @Input('editLink') contactEditLink: string;
   @Input('favorite') contactFavorited: boolean = false;
   @Input('id') contactId: number;
   @Input('image') contactImage: string;
   @Input('name') contactName: string;
 
-  @Output() toggleFavorite = new EventEmitter<ToggleFavoriteEvent>();
+  @Output() favoriteContact = new EventEmitter<FavoriteContactEvent>();
+  @Output() editContact = new EventEmitter<number>();
   @Output() deleteContact = new EventEmitter<number>();
 
   constructor() {}
@@ -26,10 +26,14 @@ export class ContactBoxComponent implements OnInit {
   ngOnInit() {}
 
   public emitFavoriteEvent() {
-    this.toggleFavorite.emit({
+    this.favoriteContact.emit({
       id: this.contactId,
       favorite: this.contactFavorited
     });
+  }
+
+  public emitEditEvent() {
+    this.editContact.emit(this.contactId);
   }
 
   public emitDeleteEvent() {

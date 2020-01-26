@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { ToggleFavoriteEvent } from 'src/app/shared/contact-box/contact-box.component';
+import { FavoriteContactEvent } from 'src/app/shared/contact-box/contact-box.component';
 
 @Component({
   selector: 'app-all-contacts',
@@ -9,12 +10,16 @@ import { ToggleFavoriteEvent } from 'src/app/shared/contact-box/contact-box.comp
 })
 export class AllContactsComponent implements OnInit {
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
-  public onToggleFavorite(event: ToggleFavoriteEvent) {
-    console.log('onToggleFavorite', event);
+  public onFavoriteContact(event: FavoriteContactEvent) {
+    console.log('onFavoriteContact', event);
+  }
+
+  public onEditContact(contactId: number) {
+    this.router.navigate(['edit', contactId]);
   }
 
   public onDeleteContact(contactId: number) {
