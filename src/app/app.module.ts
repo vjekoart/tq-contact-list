@@ -11,10 +11,13 @@ import { AllContactsComponent } from './views/all-contacts/all-contacts.componen
 import { CreateContactComponent } from './views/create-contact/create-contact.component';
 import { ContactDetailsComponent } from './views/contact-details/contact-details.component';
 import { EditContactComponent } from './views/edit-contact/edit-contact.component';
+
+// Shared
 import { ContactBoxComponent } from './shared/contact-box/contact-box.component';
 import { ContactImageComponent } from './shared/contact-image/contact-image.component';
 import { ContactAddBoxComponent } from './shared/contact-add-box/contact-add-box.component';
 import { SearchFieldComponent } from './shared/search-field/search-field.component';
+import { ContactListComponent } from './shared/contact-list/contact-list.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import { SearchFieldComponent } from './shared/search-field/search-field.compone
     ContactBoxComponent,
     ContactImageComponent,
     ContactAddBoxComponent,
-    SearchFieldComponent
+    SearchFieldComponent,
+    ContactListComponent
   ],
   imports: [
     BrowserModule,

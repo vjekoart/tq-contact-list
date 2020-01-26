@@ -1,3 +1,20 @@
 <app-search-field></app-search-field>
-<app-contact-add-box></app-contact-add-box>
-<app-contact-box></app-contact-box>
+<app-contact-list>
+  <app-contact-add-box link="create"></app-contact-add-box>
+  <app-contact-box id="1"
+    editLink="edit/1"
+    detailsLink="details/1"
+    name="John Doe"
+    [favorite]="false"
+    image="assets/img/person.png"
+    (toggleFavorite)="onToggleFavorite($event)"
+    (deleteContact)="onDeleteContact($event)"></app-contact-box>
+  <app-contact-box id="2"
+    editLink="edit/2"
+    detailsLink="details/2"
+    name="Jaden Smith"
+    [favorite]="true"
+    image="assets/img/person.png"
+    (toggleFavorite)="onToggleFavorite($event)"
+    (deleteContact)="onDeleteContact($event)"></app-contact-box>
+</app-contact-list>

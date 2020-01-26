@@ -36,7 +36,8 @@ a {
 
   transition: color 0.2s ease-in-out;
 
-  &, &:visited {
+  &,
+  &:visited {
     color: $color-inactive;
   }
 

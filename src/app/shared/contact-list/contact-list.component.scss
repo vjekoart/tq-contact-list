@@ -1,0 +1,19 @@
+@import 'variables';
+
+.contact-list-container {
+  display: block;
+  width: 100%;
+  padding: 0 8px;
+  margin: 0 auto;
+
+  > *:not(:last-child) {
+    display: block;
+    margin-bottom: 10px;
+  }
+}
+
+@media (min-width: $breakpoint) {
+  .contact-list-container {
+    padding: 0 137px;
+  }
+}

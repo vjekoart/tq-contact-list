@@ -36,6 +36,28 @@ body {
 }
 
 /**
+ * Link Reset
+ */
+a {
+  &,
+  &:hover,
+  &:active,
+  &:focus,
+  &:visited {
+    color: $color-primary;
+    text-decoration: none;
+  }
+}
+
+.fake-link {
+  &:hover,
+  &:active,
+  &:focus {
+    cursor: pointer;
+  }
+}
+
+/**
  * Form Reset
  */
 input {

@@ -1,2 +1,24 @@
-<app-contact-image></app-contact-image>
-<p>contact-box works!</p>
+<div class="container">
+  <a class="contact-information" [routerLink]="contactDetailsLink">
+    <app-contact-image [image]="contactImage" [name]="contactName"></app-contact-image>
+    <p class="contact-name">{{ contactName }}</p>
+  </a>
+  <div class="contact-actions">
+    <a class="fake-link" (click)="emitDeleteEvent()">
+      <img class="delete-icon" alt="Delete" src="assets/icons/icon-delete.svg">
+    </a>
+    <a [routerLink]="contactEditLink">
+      <img class="edit-icon" alt="Edit" src="assets/icons/icon-edit.svg">
+    </a>
+    <a class="fake-link action-favorite" (click)="emitFavoriteEvent()">
+      <img *ngIf="contactFavorited"
+        class="favorite-icon"
+        alt="Remove from favorites"
+        src="assets/icons/icon-heart-full.svg">
+      <img *ngIf="!contactFavorited"
+        class="favorite-icon"
+        alt="Add to favorites"
+        src="assets/icons/icon-heart-empty.svg">
+    </a>
+  </div>
+</div>
