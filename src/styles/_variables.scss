@@ -10,8 +10,11 @@ $font-size-base: 18px;
 $line-height-base: 22px;
 
 // Visuals
+$color-white: #FFFFFF;
+$color-black: #000000;
+
 $color-gradient-light: #78C9CE;
 $color-gradient-dark: #2496A2;
 
 $header-background: linear-gradient(182.65deg, $color-gradient-light 0%, $color-gradient-dark 99.98%, $color-gradient-dark 100%);
-$header-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+$header-shadow: 0 2px 4px 0 rgba($color-black, 0.2);
