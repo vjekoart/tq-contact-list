@@ -30,11 +30,11 @@ export class ContactBoxComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!changes.contactImage.currentValue)
+    if (changes.contactImage && !changes.contactImage.currentValue)
       this.contactImage = 'assets/img/person.png';
   }
 
-  public emitOpenContact() {
+  public emitOpenEvent() {
     this.openContact.emit(this.contactId);
   }
 

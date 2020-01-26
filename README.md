@@ -10,12 +10,7 @@ Angular web application for contact management.
 
 ## Usage
 
-When running for the first time, mock data will be saved to the browsers local storage. Mock data are defined in the `src/assets/mock-data.json` file.
-
-For development purposes following functions are exposed in the browser console:
-
-1. Function `tq.resetData()`; reset mock data to the initial state and reload the page.
-2. Function `tq.setDelay(maxDelayMs?)`; add a random delay in ms no longer than `maxDelayMs` when performing API actions. Call this function without any parameters to disable delay.
+During usage mock data is used, which is defined in the `src/assets/mock-data.json` file. Keep in mind that data is saved in localStorage. To reset state to initial mock data status, run `localStorage.clear()` in browser console and refresh the page.
 
 ### Development Usage
 
@@ -50,13 +45,6 @@ User actions defined in the *User Actions* section will be performed.
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 ## Functionality
-
-### Modifications
-
-1. Snackbar: UI component which should notify the user when action is completed.
-2. Transition of UI elements, e.g. in hover, active and similar states.
-3. Clear button in search field: UI element visible when search input field has more than zero characters.
-4. Loading indicator: UI element visible when an application is waiting for network response.
 
 ### Form Validations
 
@@ -123,7 +111,6 @@ Actions rely on mock data defined in the `src/assets/mock-data.json` file.
 3. List of all contacts on home page
 4. List of favorite contacts
 5. Search functionality on home and favorites page (by full name)
-6. Loading indicator (LoadingIndicatorComponent)
 7. Details page
 8. Create page with form validation
 9. Edit page with form validation
@@ -133,15 +120,6 @@ Actions rely on mock data defined in the `src/assets/mock-data.json` file.
 13. E2E tests (experimental)
     * Implement helper methods
     * Implement user actions
-
-### Guidelines
-
-* Components
-  * Component should have smoke and basic unit test
-  * Component should be responsive
-* Services
-  * Each method should have unit tests
-  * Each method should be documented
 
 ---
 

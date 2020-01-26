@@ -59,6 +59,7 @@ export class MockApiService {
       }
 
       this.memory[key] = value;
+      window.localStorage.setItem(this.localStorageKey, JSON.stringify(this.memory));
 
       resolve(true);
     });
@@ -72,6 +73,7 @@ export class MockApiService {
       }
 
       delete this.memory[key];
+      window.localStorage.setItem(this.localStorageKey, JSON.stringify(this.memory));
 
       resolve(true);
     });
@@ -85,6 +87,7 @@ export class MockApiService {
       }
 
       this.memory[key] = value;
+      window.localStorage.setItem(this.localStorageKey, JSON.stringify(this.memory));
 
       resolve(true);
     });

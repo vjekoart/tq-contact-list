@@ -27,7 +27,7 @@ export class AllContactsComponent implements OnInit {
   }
 
   public onFavoriteContact(event: FavoriteContactEvent) {
-    console.log('onFavoriteContact', event);
+    this.dataService.changeFavoriteState(event.id, !event.favorite);
   }
 
   public onEditContact(contactId: number) {

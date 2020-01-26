@@ -18,7 +18,7 @@ export class FavoritesComponent implements OnInit {
   constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit() {
-    this.contacts = this.dataService.contacts;
+    this.contacts = this.dataService.favorites;
     this.dataService.getFavorites();
   }
 
@@ -27,7 +27,7 @@ export class FavoritesComponent implements OnInit {
   }
 
   public onFavoriteContact(event: FavoriteContactEvent) {
-    console.log('onFavoriteContact', event);
+    this.dataService.changeFavoriteState(event.id, !event.favorite);
   }
 
   public onEditContact(contactId: number) {
