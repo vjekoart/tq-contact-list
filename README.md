@@ -99,28 +99,44 @@ Actions rely on mock data defined in the `src/assets/mock-data.json` file.
 ## Roadmap
 
 1. Planning
-    * Project structure
+    * Project requirements & structure
 2. Setup of Angular application
-    * Router & views: home (with option to display list of favorite contacts), create, edit and details page
-    * Services: DataService, MockApiService
     * Base (index.html, root styles and fonts)
-3. List of all and favorite contacts on home page
-4. Search functionality on home page (by full name)
-5. Loading indicator (LoadingIndicatorComponent)
-6. Details page
-7. Create page with form validation
-8. Edit page with form validation
-9. Favorite functionality (home and details page)
-10. Delete functionality (DeleteDialogComponent, DeleteDialogService)
-11. Snackbar notifications (SnackbarComponent, SnackbarService)
-12. E2E tests (experimental)
+    * Services: DataService, MockApiService
+    * Router & Views
+        * Home
+            * List of all contacts
+            * Add to/remove from favorites
+            * Delete contact
+        * Favorites
+            * List of favorite contacts
+            * Add to/remove from favorites
+            * Delete contact
+        * Create contact
+        * Contact details
+        * Edit contact
+    * Shared components
+        * ContactBoxComponent
+        * ContactAddBoxComponent
+        * SearchFieldComponent
+        * ContactImageComponent
+3. List of all contacts on home page
+4. List of favorite contacts
+5. Search functionality on home and favorites page (by full name)
+6. Loading indicator (LoadingIndicatorComponent)
+7. Details page
+8. Create page with form validation
+9. Edit page with form validation
+10. Favorite functionality (home and details page)
+11. Delete functionality (DeleteDialogComponent, DeleteDialogService)
+12. Snackbar notifications (SnackbarComponent, SnackbarService)
+13. E2E tests (experimental)
     * Implement helper methods
     * Implement user actions
 
 ### Guidelines
 
 * Components
-  * Component selector should have prefix `tq-`
   * Component should have smoke and basic unit test
   * Component should be responsive
 * Services

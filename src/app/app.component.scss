@@ -1,0 +1,35 @@
+@import 'variables';
+
+header {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 60px;
+
+  background-color: $color-gradient-dark;
+  background-image: $header-background;
+  //box-shadow: $header-shadow;
+}
+
+.bottom-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 7px;
+
+  background-color: rgba(255, 255, 255, 0.3);
+  //box-shadow: $header-shadow;
+}
+
+#logo {
+  display: block;
+
+  width: 180px;
+}

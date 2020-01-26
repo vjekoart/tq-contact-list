@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'styles/variables';
+
+/**
+ * Reset
+ */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+}
+
+body {
+  min-height: 100%;
+}
