@@ -1,4 +1,6 @@
-<div class="container">
-  <img class="add-icon" alt="Add" src="assets/icons/icon-add.svg">
-  <a [routerLink]="inputRouterLink">Add new</a>
-</div>
+<a class="fake-link" (click)="openCreate.emit()">
+  <div class="container">
+    <img class="add-icon" alt="Add" src="assets/icons/icon-add.svg">
+    <p>Add new</p>
+  </div>
+</a>

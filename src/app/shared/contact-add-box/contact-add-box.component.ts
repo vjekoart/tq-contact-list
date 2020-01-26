@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output
+} from '@angular/core';
 
 @Component({
   selector: 'app-contact-add-box',
@@ -6,7 +11,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./contact-add-box.component.scss']
 })
 export class ContactAddBoxComponent implements OnInit {
-  @Input('link') inputRouterLink: string;
+  @Output() openCreate = new EventEmitter<void>();
 
   constructor() {}
 

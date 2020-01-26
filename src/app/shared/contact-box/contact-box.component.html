@@ -1,16 +1,16 @@
 <div class="container">
-  <a class="contact-information fake-link" (click)="emitOpenEvent()">
+  <a class="contact-information fake-link" (click)="onOpen.emit()">
     <app-contact-image [image]="contactImage" [name]="contactName"></app-contact-image>
     <p class="contact-name">{{ contactName }}</p>
   </a>
   <div class="contact-actions">
-    <a class="fake-link" (click)="emitDeleteEvent()">
+    <a class="fake-link" (click)="onDelee.emit()">
       <img class="delete-icon" alt="Delete" src="assets/icons/icon-delete.svg">
     </a>
-    <a class="fake-link" (click)="emitEditEvent()">
+    <a class="fake-link" (click)="onEdit.emit()">
       <img class="edit-icon" alt="Edit" src="assets/icons/icon-edit.svg">
     </a>
-    <a class="fake-link action-favorite" (click)="emitFavoriteEvent()">
+    <a class="fake-link action-favorite" (click)="onFavorite.emit()">
       <img *ngIf="contactFavorited"
         class="favorite-icon"
         alt="Remove from favorites"

@@ -1,4 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
+
+const defaultImage: string = 'assets/img/person.png';
 
 export interface FavoriteContactEvent {
   id: number;
@@ -10,46 +20,32 @@ export interface FavoriteContactEvent {
   templateUrl: './contact-box.component.html',
   styleUrls: ['./contact-box.component.scss']
 })
-export class ContactBoxComponent implements OnInit {
-  @Input('detailsLink') contactDetailsLink: string;
-  @Input('favorite') contactFavorited: boolean = false;
-  @Input('id') contactId: number;
-  @Input('image') contactImage: string;
-  @Input('name') contactName: string;
+export class ContactBoxComponent implements OnInit, OnChanges {
+  @Input('favorited') contactFavorited: boolean = false;
+  @Input('image') contactImage: string = defaultImage;
+  @Input('name') contactName: string = 'unknown';
 
-  @Output() openContact = new EventEmitter<number>();
-  @Output() favoriteContact = new EventEmitter<FavoriteContactEvent>();
-  @Output() editContact = new EventEmitter<number>();
-  @Output() deleteContact = new EventEmitter<number>();
+  @Output() onOpen = new EventEmitter<void>();
+  @Output() onFavorite = new EventEmitter<void>();
+  @Output() onEdit = new EventEmitter<void>();
+  @Output() onDelete = new EventEmitter<void>();
 
   constructor() {}
 
   ngOnInit() {
     if (!this.contactImage)
-      this.contactImage = 'assets/img/person.png';
+      this.contactImage = this.sanitizeContactImage(this.contactImage);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.contactImage && !changes.contactImage.currentValue)
-      this.contactImage = 'assets/img/person.png';
+    if (changes.contactImage)
+      this.contactImage = this.sanitizeContactImage(changes.contactImage.currentValue);
   }
 
-  public emitOpenEvent() {
-    this.openContact.emit(this.contactId);
-  }
+  private sanitizeContactImage(image?: string): string {
+    if (!this.contactImage || typeof this.contactImage !== 'string')
+      return defaultImage;
 
-  public emitFavoriteEvent() {
-    this.favoriteContact.emit({
-      id: this.contactId,
-      favorite: this.contactFavorited
-    });
-  }
-
-  public emitEditEvent() {
-    this.editContact.emit(this.contactId);
-  }
-
-  public emitDeleteEvent() {
-    this.deleteContact.emit(this.contactId);
+    return this.contactImage;
   }
 }

@@ -1,6 +1,6 @@
-<form>
+<form (ngSubmit)="emitChange($event)">
   <div class="input-container">
-    <input type="text">
+    <input [(ngModel)]="keyword" (ngModelChange)="emitChange()" name="keyword" type="text">
     <img class="search-icon" alt="Search" src="assets/icons/icon-search.svg">
   </div>
 </form>

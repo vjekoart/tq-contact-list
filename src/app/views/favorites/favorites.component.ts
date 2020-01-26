@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { FavoriteContactEvent } from 'src/app/shared/contact-box/contact-box.component';
-
+import { ActionService } from 'src/app/services/action.service';
 import { DataService, ContactModel } from 'src/app/services/data.service';
 
 @Component({
@@ -15,26 +14,14 @@ export class FavoritesComponent implements OnInit {
 
   public contacts: Observable<ContactModel[]>;
 
-  constructor(private router: Router, private dataService: DataService) {}
+  constructor(
+    public action: ActionService,
+    public store: DataService,
+    public router: Router
+  ) {}
 
   ngOnInit() {
-    this.contacts = this.dataService.favorites;
-    this.dataService.getFavorites();
-  }
-
-  public onOpenContact(contactId: number) {
-    this.router.navigate(['details', contactId]);
-  }
-
-  public onFavoriteContact(event: FavoriteContactEvent) {
-    this.dataService.changeFavoriteState(event.id, !event.favorite);
-  }
-
-  public onEditContact(contactId: number) {
-    this.router.navigate(['edit', contactId]);
-  }
-
-  public onDeleteContact(contactId: number) {
-    console.log('onDeleteContact', contactId);
+    this.contacts = this.store.favorites;
+    this.action.getFavorites();
   }
 }

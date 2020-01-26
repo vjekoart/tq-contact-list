@@ -1,1 +1,14 @@
-<p>create-contact works!</p>
+<app-contact-form
+  [name]="null"
+  [email]="null"
+  [numbers]="null"
+  [image]="null"
+  [hasBack]="true"
+  [hasCancel]="true"
+  [hasDelete]="false"
+  [hasEdit]="false"
+  [hasFavorite]="false"
+  [hasSave]="true"
+  (onBack)="location.back()"
+  (onCancel)="location.back()"
+  (onSave)="action.createContact($event)"></app-contact-form>

@@ -1,0 +1,36 @@
+import { Injectable } from '@angular/core';
+
+import { DataService } from 'src/app/services/data.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ActionService {
+
+  constructor(private store: DataService) {}
+
+  public getContacts(keyword?: string) {
+    this.store.getAll(keyword);
+  }
+
+  public getFavorites(keyword?: string) {
+    this.store.getFavorites(keyword);
+  }
+
+  public getContact(contactId: number) {
+    this.store.getOne(contactId);
+  }
+
+  public updateContact(contactId: number, newProperties: any) {
+    this.store.updateOne(contactId, newProperties);
+  }
+
+  public deleteContact(contactId: number) {
+    // TODO: Call DialogService, and in successul promise call store
+    this.store.deleteOne(contactId);
+  }
+
+  public createContact(newProperties: any) {
+    this.store.createOne(newProperties);
+  }
+}

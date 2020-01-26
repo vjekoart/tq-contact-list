@@ -30,16 +30,6 @@ ng serve --port 4300
 # Navigate to http://localhost:4200 in browser to use the application
 ```
 
-### Unit Tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-### End-to-end Tests (user simulation)
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-User actions defined in the *User Actions* section will be performed.
-
 ### Production Usage
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
@@ -53,73 +43,19 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 * Field for phone number may only contain numbers and character `+`.
 * Field for phone name must not be empty.
 
-### User Actions
-
-This section contains a list of actions performed during E2E tests. The idea is to cover application features by executing actions which simulate user behaviour.
-
-Actions rely on mock data defined in the `src/assets/mock-data.json` file.
-
-1. Open application in the browser and a list of all contacts (11 items) should display.
-2. Click on the `My favorites` button and a list of favorite contacts (5 items) should display.
-3. Click on the *add to favorites* button for `Oscar Arnold` and contact should disappear from the list and notification should display.
-4. Click on the `All contacts` button and a list of all contacts (11 items) should display, where contact `Oscar Arnold` is not marked as a favorite.
-5. Click on the *delete* button for `Oscar Arnold` and delete dialog should display. Click on `Cancel` button and dialog should disappear.
-6. Click on the *delete* button for `Catherine Moore` and delete dialog should display. Click `Delete` button and dialog should disappear, contact list should not contain `Catherine Moore` and notification should display.
-7. Click on the contact `Addie Hernandez` and details page should open, where name, email, numbers and button states should reflect status of the contact.
-8. Click on the *add to favorites* button inside the details page and state of the button should change.
-9. Click on the *back* button and a list of all contacts (10 items) should display, where `Addie Hernandez` is marked as a favorite contact.
-10. Enter character `e` in the search field and list should not change.
-11. Enter additional character `r` in the search field and list should contain search results for string `er` (6 items).
-12. Hover over the contact `Ann Schneider` and click on the *edit* button. Edit page should open, where name, email and numbers should reflect status of the contact.
-13. Change content of the name input field to `Ann Arnold` and click on the `Cancel` button. Page with search results (11.) should open and contact with name `Ann Schneider` should be present.
-14. Click on the *clear* button in search input field and a list of all contacts (10 items) should display.
-15. Click on the contact `Rose Bush` and details page should open, where name, email, numbers and button states should reflect status of the contact.
-16. Click on the *edit* button and edit page should open, where name, email and numbers should reflect status of the contact.
-17. Remove `Home` number by clicking on the *remove* button and the number should be removed from the `numbers` section.
-18. Click on `Add number` and new, empty number should display (phone and name fields). Set new number to `+385 91 123 456` and name of the number to `New home`.
-19. Remove all text from the `full name` field. Click on the `Save` button and notification with error message should display, and `full name` input field should get red border.
-20. Enter `Rose Bush` to the `full name` field and click on the `Save` button. Notification should appear and previous (details) page should open.
-21. Click on the *back* button and a list of all contacts (10 items) should display.
-22. Click on the *Add new* button and create page should open, where all fields are present.
-23. Fill `email` field with `john.doe@example.com` and add a number where phone is `+385 95 999 888` and name is `Home`. Click on the `Save` button and notification with error message should display, and `full name` input field should get red border.
-24. Fill `full name` field with `John Doe` and click on the `Save` button. Notification should appear and previous (home) page should open with the list of all contacts (11 items), where card with name `John Doe` is present.
-
 ## Roadmap
 
-1. Planning
-    * Project requirements & structure
-2. Setup of Angular application
-    * Base (index.html, root styles and fonts)
-    * Services: DataService, MockApiService
-    * Router & Views
-        * Home
-            * List of all contacts
-            * Add to/remove from favorites
-            * Delete contact
-        * Favorites
-            * List of favorite contacts
-            * Add to/remove from favorites
-            * Delete contact
-        * Create contact
-        * Contact details
-        * Edit contact
-    * Shared components
-        * ContactBoxComponent
-        * ContactAddBoxComponent
-        * SearchFieldComponent
-        * ContactImageComponent
-3. List of all contacts on home page
-4. List of favorite contacts
-5. Search functionality on home and favorites page (by full name)
-7. Details page
-8. Create page with form validation
-9. Edit page with form validation
-10. Favorite functionality (home and details page)
-11. Delete functionality (DeleteDialogComponent, DeleteDialogService)
-12. Snackbar notifications (SnackbarComponent, SnackbarService)
-13. E2E tests (experimental)
-    * Implement helper methods
-    * Implement user actions
+1. Details page
+    * ContactFormComponent
+        * TextFieldComponent
+        * NumberFieldComponent
+        * Reuse existing ContactImage
+        * FormButtonComponent
+          * FieldLabelComponent
+          * InputFieldComponent (resue in home/favorites search)
+2. Create page with form validation
+3. Edit page with form validation
+4. Delete functionality (DeleteDialogComponent, DeleteDialogService)
 
 ---
 
