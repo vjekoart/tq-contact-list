@@ -1,1 +1,60 @@
-{}
+{
+  "contacts": [
+    {
+      "id": 1,
+      "name": "Addie Hernandez",
+      "favorited": false,
+      "image": "https://loremflickr.com/cache/resized/65535_49000817733_bc6cb263f2_z_400_400_nofilter.jpg"
+    }, {
+      "id": 2,
+      "name": "Oscar Arnold",
+      "favorited": true,
+      "image": "https://loremflickr.com/cache/resized/65535_48119441487_366f858f83_z_400_400_nofilter.jpg"
+    }, {
+      "id": 3,
+      "name": "Isaiah McGuire",
+      "favorited": true,
+      "image": "https://loremflickr.com/cache/resized/65535_48730933186_d4b4dd1979_z_400_400_nofilter.jpg"
+    }, {
+      "id": 4,
+      "name": "Ann Schneider",
+      "favorited": false,
+      "image": "https://loremflickr.com/cache/resized/2849_9140904545_cefc2e923d_z_400_400_nofilter.jpg"
+    }, {
+      "id": 5,
+      "name": "Agnes Terry",
+      "favorited": false,
+      "image": "https://loremflickr.com/cache/resized/65535_48246966371_bf15da49ac_400_400_nofilter.jpg"
+    }, {
+      "id": 6,
+      "name": "Rose Bush",
+      "favorited": false,
+      "image": "https://loremflickr.com/cache/resized/65535_48690418248_9d334f129b_z_400_400_nofilter.jpg"
+    }, {
+      "id": 7,
+      "name": "Duane Reese",
+      "favorited": true,
+      "image": "https://loremflickr.com/cache/resized/65535_49106380793_d7478aaefe_z_400_400_nofilter.jpg"
+    }, {
+      "id": 8,
+      "name": "Mae Chandler",
+      "favorited": false,
+      "image": "https://loremflickr.com/cache/resized/65535_49287288812_cc3ab56551_z_400_400_nofilter.jpg"
+    }, {
+      "id": 9,
+      "name": "Evelyn Weaver",
+      "favorited": true,
+      "image": "https://loremflickr.com/cache/resized/65535_48141937757_db9599ed8b_z_400_400_nofilter.jpg"
+    }, {
+      "id": 10,
+      "name": "Catherine Moore",
+      "favorited": true,
+      "image": "https://loremflickr.com/cache/resized/3158_2811388171_283337e314_z_400_400_nofilter.jpg"
+    }, {
+      "id": 11,
+      "name": "Sam Manning",
+      "favorited": false,
+      "image": "https://loremflickr.com/cache/resized/7011_6418808255_41fa7ebdd8_z_400_400_nofilter.jpg"
+    }
+  ]
+}

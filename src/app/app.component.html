@@ -3,6 +3,8 @@
   <div class="bottom-line"></div>
 </header>
 <main>
-  <router-outlet></router-outlet>
+  <p *ngIf="!ready && !fatal" class="loading-message">Loading...</p>
+  <p *ngIf="fatal" class="fatal-message">There was an error during application initialization.</p>
+  <router-outlet *ngIf="ready && !fatal"></router-outlet>
 </main>
 <!-- <footer></footer> -->

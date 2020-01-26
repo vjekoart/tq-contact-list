@@ -1,4 +1,13 @@
 <app-search-field></app-search-field>
 <app-contact-list>
-  <app-contact-box></app-contact-box>
+  <template *ngFor="let contact of contacts | async">
+    <app-contact-box [id]="contact.id"
+      [name]="contact.name"
+      [favorite]="contact.favorited"
+      [image]="contact.image"
+      (openContact)="onOpenContact($event)"
+      (favoriteContact)="onFavoriteContact($event)"
+      (editContact)="onEditContact($event)"
+      (deleteContact)="onDeleteContact($event)"></app-contact-box>
+  </template>
 </app-contact-list>

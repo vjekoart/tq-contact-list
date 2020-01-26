@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { FavoriteContactEvent } from 'src/app/shared/contact-box/contact-box.component';
+
+import { DataService, ContactModel } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-all-contacts',
@@ -10,9 +13,18 @@ import { FavoriteContactEvent } from 'src/app/shared/contact-box/contact-box.com
 })
 export class AllContactsComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  public contacts: Observable<ContactModel[]>;
 
-  ngOnInit() {}
+  constructor(private router: Router, private dataService: DataService) {}
+
+  ngOnInit() {
+    this.contacts = this.dataService.contacts;
+    this.dataService.getAll();
+  }
+
+  public onOpenContact(contactId: number) {
+    this.router.navigate(['details', contactId]);
+  }
 
   public onFavoriteContact(event: FavoriteContactEvent) {
     console.log('onFavoriteContact', event);

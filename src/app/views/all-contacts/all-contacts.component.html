@@ -1,31 +1,14 @@
 <app-search-field></app-search-field>
 <app-contact-list>
   <app-contact-add-box link="create"></app-contact-add-box>
-  <app-contact-box id="1"
-    editLink="edit/1"
-    detailsLink="details/1"
-    name="John Doe"
-    [favorite]="false"
-    image="assets/img/person.png"
-    (favoriteContact)="onFavoriteContact($event)"
-    (editContact)="onEditContact($event)"
-    (deleteContact)="onDeleteContact($event)"></app-contact-box>
-  <app-contact-box id="2"
-    editLink="edit/2"
-    detailsLink="details/2"
-    name="Jaden Smith"
-    [favorite]="true"
-    image="assets/img/person.png"
-    (favoriteContact)="onFavoriteContact($event)"
-    (editContact)="onEditContact($event)"
-    (deleteContact)="onDeleteContact($event)"></app-contact-box>
-  <app-contact-box id="3"
-    editLink="edit/3"
-    detailsLink="details/3"
-    name="Bruno Banani"
-    [favorite]="true"
-    image="assets/img/person.png"
-    (favoriteContact)="onFavoriteContact($event)"
-    (editContact)="onEditContact($event)"
-    (deleteContact)="onDeleteContact($event)"></app-contact-box>
+  <template *ngFor="let contact of contacts | async">
+    <app-contact-box [id]="contact.id"
+      [name]="contact.name"
+      [favorite]="contact.favorited"
+      [image]="contact.image"
+      (openContact)="onOpenContact($event)"
+      (favoriteContact)="onFavoriteContact($event)"
+      (editContact)="onEditContact($event)"
+      (deleteContact)="onDeleteContact($event)"></app-contact-box>
+  </template>
 </app-contact-list>

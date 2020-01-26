@@ -1,5 +1,5 @@
 <div class="container">
-  <a class="contact-information" [routerLink]="contactDetailsLink">
+  <a class="contact-information fake-link" (click)="emitOpenEvent()">
     <app-contact-image [image]="contactImage" [name]="contactName"></app-contact-image>
     <p class="contact-name">{{ contactName }}</p>
   </a>

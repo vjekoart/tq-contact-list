@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 
 export interface FavoriteContactEvent {
   id: number;
@@ -17,13 +17,26 @@ export class ContactBoxComponent implements OnInit {
   @Input('image') contactImage: string;
   @Input('name') contactName: string;
 
+  @Output() openContact = new EventEmitter<number>();
   @Output() favoriteContact = new EventEmitter<FavoriteContactEvent>();
   @Output() editContact = new EventEmitter<number>();
   @Output() deleteContact = new EventEmitter<number>();
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (!this.contactImage)
+      this.contactImage = 'assets/img/person.png';
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes.contactImage.currentValue)
+      this.contactImage = 'assets/img/person.png';
+  }
+
+  public emitOpenContact() {
+    this.openContact.emit(this.contactId);
+  }
 
   public emitFavoriteEvent() {
     this.favoriteContact.emit({
