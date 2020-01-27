@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
-const _tag = '[MockApiService]';
+const TAG = '[MockApiService]';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MockApiService {
 
-  private localStorageKey: string = 'tq-contact-list';
+  private localStorageKey = 'tq-contact-list';
   private memory: any = {};
 
   constructor() {}
@@ -17,7 +17,7 @@ export class MockApiService {
       const existingValue = window.localStorage.getItem(this.localStorageKey);
 
       if (!existingValue) {
-        console.info(_tag, 'No existing data in localStorage, preset contact list will be used.');
+        console.log(TAG, 'No existing data in localStorage, preset contact list will be used.');
 
         window.fetch('assets/mock-data.json')
           .then(response => {
@@ -25,14 +25,14 @@ export class MockApiService {
               const jsonData = response.json();
               return jsonData;
             } catch (error) {
-              console.warn(_tag, 'Error while parsing preset contact list, setting empty data.', error);
+              console.warn(TAG, 'Error while parsing preset contact list, setting empty data.', error);
               return {};
             }
           })
           .then(jsonResponse => {
             this.memory = jsonResponse;
             resolve(true);
-          })
+          });
 
         return;
       }
@@ -40,7 +40,7 @@ export class MockApiService {
       try {
         this.memory = JSON.parse(existingValue);
       } catch (error) {
-        console.warn(_tag, 'Error while parsing existing data in localStorage, setting empty data.', error);
+        console.warn(TAG, 'Error while parsing existing data in localStorage, setting empty data.', error);
         this.memory = {};
       }
 

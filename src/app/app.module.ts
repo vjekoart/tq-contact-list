@@ -7,12 +7,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Views
-import { HomeComponent } from './views/home/home.component';
-import { FavoritesComponent } from './views/favorites/favorites.component';
-import { AllContactsComponent } from './views/all-contacts/all-contacts.component';
-import { CreateContactComponent } from './views/create-contact/create-contact.component';
-import { ContactDetailsComponent } from './views/contact-details/contact-details.component';
-import { EditContactComponent } from './views/edit-contact/edit-contact.component';
+import { HomeViewComponent } from './views/home-view/home-view.component';
+import { ListViewComponent } from './views/list-view/list-view.component';
+import { FavoritesViewComponent } from './views/favorites-view/favorites-view.component';
+import { CreateViewComponent } from './views/create-view/create-view.component';
+import { DetailsViewComponent } from './views/details-view/details-view.component';
+import { EditViewComponent } from './views/edit-view/edit-view.component';
 
 // Shared
 import { ContactBoxComponent } from './shared/contact-box/contact-box.component';
@@ -25,12 +25,12 @@ import { ContactFormComponent } from './shared/contact-form/contact-form.compone
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    FavoritesComponent,
-    AllContactsComponent,
-    CreateContactComponent,
-    ContactDetailsComponent,
-    EditContactComponent,
+    HomeViewComponent,
+    ListViewComponent,
+    FavoritesViewComponent,
+    CreateViewComponent,
+    DetailsViewComponent,
+    EditViewComponent,
     ContactBoxComponent,
     ContactImageComponent,
     ContactAddBoxComponent,

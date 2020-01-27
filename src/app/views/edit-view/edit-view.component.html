@@ -7,7 +7,7 @@
   [hasCancel]="true"
   [hasDelete]="true"
   [hasSave]="true"
-  (onBack)="location.back()"
-  (onCancel)="location.back()"
-  (onDelete)="action.deleteContact(contact.id)"
-  (onSave)="action.updateContact(contact.id, $event)"></app-contact-form>
+  (backAction)="location.back()"
+  (cancelAction)="location.back()"
+  (deleteAction)="action.deleteContact(contact.id)"
+  (saveAction)="action.updateContact(contact.id, $event)"></app-contact-form>

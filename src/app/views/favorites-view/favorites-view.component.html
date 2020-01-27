@@ -5,9 +5,9 @@
       [name]="contact.name"
       [favorited]="contact.favorited"
       [image]="contact.image"
-      (onOpen)="router.navigate(['details', contact.id])"
-      (onFavorite)="action.updateContact(contact.id, { favorited: !contact.favorited })"
-      (onEdit)="router.navigate(['edit', contact.id])"
-      (onDelete)="action.deleteContact(contact.id)"></app-contact-box>
+      (openAction)="router.navigate(['details', contact.id])"
+      (favoriteAction)="action.updateContact(contact.id, { favorited: !contact.favorited })"
+      (editAction)="router.navigate(['edit', contact.id])"
+      (deleteAction)="action.deleteContact(contact.id)"></app-contact-box>
   </template>
 </app-contact-list>

@@ -14,26 +14,26 @@ import { ContactNumber } from 'src/app/services/store.service';
   styleUrls: ['./contact-form.component.scss']
 })
 export class ContactFormComponent implements OnInit {
-  @Input('name') contactName: string = '';
-  @Input('email') contactEmail: string = '';
-  @Input('numbers') contactNumbers: ContactNumber[] = [];
-  @Input('image') contactImage: string = '';
-  @Input('favorited') contactFavorited = false;
+  @Input() name = '';
+  @Input() email = '';
+  @Input() numbers: ContactNumber[] = [];
+  @Input() image = '';
+  @Input() favorited = false;
 
-  @Input('readonly') formReadonly = false;
-  @Input('hasBack') formHasBack = false;
-  @Input('hasCancel') formHasCancel = false;
-  @Input('hasDelete') formHasDelete = false;
-  @Input('hasEdit') formHasEdit = false;
-  @Input('hasFavorite') formHasFavorite = false;
-  @Input('hasSave') formHasSave = false;
+  @Input() locked = false;
+  @Input() hasBack = false;
+  @Input() hasCancel = false;
+  @Input() hasDelete = false;
+  @Input() hasEdit = false;
+  @Input() hasFavorite = false;
+  @Input() hasSave = false;
 
-  @Output() onBack = new EventEmitter<void>();
-  @Output() onCancel = new EventEmitter<void>();
-  @Output() onDelete = new EventEmitter<void>();
-  @Output() onEdit = new EventEmitter<void>();
-  @Output() onFavorite = new EventEmitter<void>();
-  @Output() onSave = new EventEmitter<any>();
+  @Output() backAction = new EventEmitter<void>();
+  @Output() cancelAction = new EventEmitter<void>();
+  @Output() deleteAction = new EventEmitter<void>();
+  @Output() editAction = new EventEmitter<void>();
+  @Output() favoriteAction = new EventEmitter<void>();
+  @Output() saveAction = new EventEmitter<any>();
 
   constructor() {}
 

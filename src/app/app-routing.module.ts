@@ -1,33 +1,33 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AllContactsComponent } from './views/all-contacts/all-contacts.component';
-import { ContactDetailsComponent } from './views/contact-details/contact-details.component';
-import { CreateContactComponent } from './views/create-contact/create-contact.component';
-import { EditContactComponent } from './views/edit-contact/edit-contact.component';
-import { FavoritesComponent } from './views/favorites/favorites.component';
-import { HomeComponent } from './views/home/home.component';
+import { HomeViewComponent } from './views/home-view/home-view.component';
+import { ListViewComponent } from './views/list-view/list-view.component';
+import { FavoritesViewComponent } from './views/favorites-view/favorites-view.component';
+import { CreateViewComponent } from './views/create-view/create-view.component';
+import { DetailsViewComponent } from './views/details-view/details-view.component';
+import { EditViewComponent } from './views/edit-view/edit-view.component';
 
 const routes: Routes = [
   {
-    path: 'details/:id',
-    component: ContactDetailsComponent
-  }, {
     path: 'create',
-    component: CreateContactComponent
+    component: CreateViewComponent
   }, {
     path: 'edit/:id',
-    component: EditContactComponent
+    component: EditViewComponent
+  }, {
+    path: 'details/:id',
+    component: DetailsViewComponent
   }, {
     path: '',
-    component: HomeComponent,
+    component: HomeViewComponent,
     children: [
       {
         path: '',
-        component: AllContactsComponent
+        component: ListViewComponent
       }, {
         path: 'favorites',
-        component: FavoritesComponent
+        component: FavoritesViewComponent
       }
     ]
   }, {

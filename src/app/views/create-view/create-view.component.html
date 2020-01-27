@@ -1,0 +1,7 @@
+<app-contact-form
+  [hasBack]="true"
+  [hasCancel]="true"
+  [hasSave]="true"
+  (backAction)="location.back()"
+  (cancelAction)="location.back()"
+  (saveAction)="action.createContact($event)"></app-contact-form>

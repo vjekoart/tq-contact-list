@@ -4,10 +4,10 @@
   [numbers]="contact.numbers"
   [image]="contact.image"
   [favorited]="contact.favorited"
-  [readonly]="true"
+  [locked]="true"
   [hasBack]="true"
   [hasEdit]="true"
   [hasFavorite]="true"
-  (onBack)="location.back()"
-  (onEdit)="router.navigate(['edit', contact.id])"
+  (backAction)="location.back()"
+  (editAction)="router.navigate(['edit', contact.id])"
   (onFavorite)="action.updateContact(contact.id, { favorited: !contact.favorited })"></app-contact-form>

@@ -7,11 +7,11 @@ import { ActionService } from 'src/app/services/action.service';
 import { StoreService, ContactModel } from 'src/app/services/store.service';
 
 @Component({
-  selector: 'app-contact-details',
-  templateUrl: './contact-details.component.html',
-  styleUrls: ['./contact-details.component.scss']
+  selector: 'app-details-view',
+  templateUrl: './details-view.component.html',
+  styleUrls: ['./details-view.component.scss']
 })
-export class ContactDetailsComponent implements OnInit {
+export class DetailsViewComponent implements OnInit {
 
   public contact: Observable<ContactModel | {}>;
   public contactId: number;
@@ -26,7 +26,7 @@ export class ContactDetailsComponent implements OnInit {
 
   ngOnInit() {
     // TODO: If contact doesn't exists, go to dashboard
-    this.contact = this.store.contact;
+    this.contact = this.store.contact$;
     this.route.paramMap.subscribe(params => {
       this.contactId = parseInt(params.get('id'), 10);
       this.action.getContact(this.contactId);

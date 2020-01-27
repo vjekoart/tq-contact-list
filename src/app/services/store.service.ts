@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 import { MockApiService } from 'src/app/services/mock-api.service';
 
-const _tag = '[StoreService]';
+const TAG = '[StoreService]';
 
 export interface ContactNumber {
   number: string;
@@ -31,9 +31,6 @@ export interface CreateContactModel {
   providedIn: 'root'
 })
 export class StoreService {
-  private _contact = new BehaviorSubject<ContactModel | {}>({});
-  private _contacts = new BehaviorSubject<ContactModel[]>([]);
-  private _favorites = new BehaviorSubject<ContactModel[]>([]);
 
   private store: {
     contact: ContactModel | {},
@@ -45,9 +42,13 @@ export class StoreService {
     favorites: []
   };
 
-  readonly contact = this._contact.asObservable();
-  readonly contacts = this._contacts.asObservable();
-  readonly favorites = this._favorites.asObservable();
+  private subjectContact = new BehaviorSubject<ContactModel | {}>({});
+  private subjectContacts = new BehaviorSubject<ContactModel[]>([]);
+  private subjectFavorites = new BehaviorSubject<ContactModel[]>([]);
+
+  readonly contact$ = this.subjectContact.asObservable();
+  readonly contacts$ = this.subjectContacts.asObservable();
+  readonly favorites$ = this.subjectFavorites.asObservable();
 
   constructor(private apiService: MockApiService) {}
 
@@ -67,10 +68,11 @@ export class StoreService {
     this.apiService.getValue('contacts').then((contacts: ContactModel[]) => {
       const target = contacts.find(el => el.id === id);
 
-      if (!target)
+      if (!target) {
         return;
+      }
 
-      this._contact.next(Object.assign({}, target));
+      this.subjectContact.next(Object.assign({}, target));
     });
   }
 
@@ -81,16 +83,18 @@ export class StoreService {
   public getAll(keyword?: string): void {
     this.apiService.getValue('contacts').then((contacts: ContactModel[]) => {
       this.store.contacts = contacts.filter(contact => {
-        if (!keyword)
+        if (!keyword) {
           return true;
+        }
 
-        if (contact.name.toLowerCase().includes(keyword.toLowerCase()))
+        if (contact.name.toLowerCase().includes(keyword.toLowerCase())) {
           return true;
+        }
 
         return false;
       });
 
-      this._contacts.next(Object.assign({}, this.store).contacts);
+      this.subjectContacts.next(Object.assign({}, this.store).contacts);
     });
   }
 
@@ -101,19 +105,22 @@ export class StoreService {
   public getFavorites(keyword?: string): void {
     this.apiService.getValue('contacts').then((contacts: ContactModel[]) => {
       this.store.favorites = contacts.filter(contact => {
-        if (!contact.favorited)
+        if (!contact.favorited) {
           return false;
+        }
 
-        if (!keyword)
+        if (!keyword) {
           return true;
+        }
 
-        if (contact.name.toLowerCase().includes(keyword.toLowerCase()))
+        if (contact.name.toLowerCase().includes(keyword.toLowerCase())) {
           return true;
+        }
 
         return false;
       });
 
-      this._favorites.next(Object.assign({}, this.store).favorites);
+      this.subjectFavorites.next(Object.assign({}, this.store).favorites);
     });
   }
 
@@ -139,14 +146,15 @@ export class StoreService {
 
       this.store.contacts = contacts;
       this.apiService.updateValue('contacts', this.store.contacts);
-      this._contacts.next(Object.assign({}, this.store).contacts);
+      this.subjectContacts.next(Object.assign({}, this.store).contacts);
 
       // If applicable, add new contact to favorites
-      if (finalContact.favorited !== true)
+      if (finalContact.favorited !== true) {
         return;
+      }
 
       this.store.favorites.push(finalContact);
-      this._favorites.next(Object.assign({}, this.store).favorites);
+      this.subjectFavorites.next(Object.assign({}, this.store).favorites);
     });
   }
 
@@ -171,7 +179,7 @@ export class StoreService {
 
     this.store.contacts[contactsIndex] = newContact;
     this.apiService.updateValue('contacts', this.store.contacts);
-    this._contacts.next(Object.assign({}, this.store).contacts);
+    this.subjectContacts.next(Object.assign({}, this.store).contacts);
 
     // Update favorites
     let favoritesIndex = -1;
@@ -185,14 +193,17 @@ export class StoreService {
       return false;
     });
 
-    if (favoritesIndex > -1 && newContact.favorited)
-      this.store.favorites[favoritesIndex] = newContact;
-    else if (favoritesIndex > -1 && !newContact.favorited)
-      this.store.favorites.splice(favoritesIndex, 1);
-    else if (newContact.favorited)
+    if (favoritesIndex > -1) {
+      if (newContact.favorited) {
+        this.store.favorites[favoritesIndex] = newContact;
+      } else {
+        this.store.favorites.splice(favoritesIndex, 1);
+      }
+    } else if (newContact.favorited) {
       this.store.favorites.push(newContact);
+    }
 
-    this._favorites.next(Object.assign({}, this.store).favorites);
+    this.subjectFavorites.next(Object.assign({}, this.store).favorites);
   }
 
   /**
@@ -211,12 +222,13 @@ export class StoreService {
       return false;
     });
 
-    if (!inContacts)
+    if (!inContacts) {
       return;
+    }
 
     this.store.contacts.splice(contactsIndex, 1);
     this.apiService.updateValue('contacts', this.store.contacts);
-    this._contacts.next(Object.assign({}, this.store).contacts);
+    this.subjectContacts.next(Object.assign({}, this.store).contacts);
 
     // Delete from favorites
     let favoritesIndex = -1;
@@ -230,10 +242,11 @@ export class StoreService {
       return false;
     });
 
-    if (!inFavorites)
+    if (!inFavorites) {
       return;
+    }
 
     this.store.favorites.splice(favoritesIndex, 1);
-    this._favorites.next(Object.assign({}, this.store).favorites);
+    this.subjectFavorites.next(Object.assign({}, this.store).favorites);
   }
 }

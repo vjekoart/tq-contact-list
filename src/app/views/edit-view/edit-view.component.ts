@@ -7,11 +7,11 @@ import { ActionService } from 'src/app/services/action.service';
 import { StoreService, ContactModel } from 'src/app/services/store.service';
 
 @Component({
-  selector: 'app-edit-contact',
-  templateUrl: './edit-contact.component.html',
-  styleUrls: ['./edit-contact.component.scss']
+  selector: 'app-edit-view',
+  templateUrl: './edit-view.component.html',
+  styleUrls: ['./edit-view.component.scss']
 })
-export class EditContactComponent implements OnInit {
+export class EditViewComponent implements OnInit {
 
   public contact: Observable<ContactModel | {}>;
   public contactId: number;
@@ -28,7 +28,7 @@ export class EditContactComponent implements OnInit {
     // TODO: If contact doesn't exists, go to dashboard
     // TODO: When contact is deleted, go to homepage
     // TODO: Handle form errors
-    this.contact = this.store.contact;
+    this.contact = this.store.contact$;
     this.route.paramMap.subscribe(params => {
       this.contactId = parseInt(params.get('id'), 10);
       this.action.getContact(this.contactId);

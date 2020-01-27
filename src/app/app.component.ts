@@ -11,8 +11,8 @@ import { MockApiService } from 'src/app/services/mock-api.service';
 export class AppComponent implements OnInit {
   constructor(private store: StoreService, private apiService: MockApiService) {}
 
-  public ready: boolean = false;
-  public fatal: boolean = false;
+  public ready = false;
+  public fatal = false;
 
   async ngOnInit() {
     const apiStatus: boolean = await this.apiService.init();

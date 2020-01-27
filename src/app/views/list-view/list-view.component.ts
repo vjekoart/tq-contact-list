@@ -6,11 +6,11 @@ import { ActionService } from 'src/app/services/action.service';
 import { StoreService, ContactModel } from 'src/app/services/store.service';
 
 @Component({
-  selector: 'app-favorites',
-  templateUrl: './favorites.component.html',
-  styleUrls: ['./favorites.component.scss']
+  selector: 'app-list-view',
+  templateUrl: './list-view.component.html',
+  styleUrls: ['./list-view.component.scss']
 })
-export class FavoritesComponent implements OnInit {
+export class ListViewComponent implements OnInit {
 
   public contacts: Observable<ContactModel[]>;
 
@@ -21,7 +21,7 @@ export class FavoritesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.contacts = this.store.favorites;
-    this.action.getFavorites();
+    this.contacts = this.store.contacts$;
+    this.action.getContacts();
   }
 }

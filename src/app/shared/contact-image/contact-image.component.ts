@@ -6,8 +6,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./contact-image.component.scss']
 })
 export class ContactImageComponent implements OnInit {
-  @Input('image') contactImage: string;
-  @Input('name') contactName: string;
+  @Input() image: string;
+  @Input() name: string;
 
   constructor() {}
 

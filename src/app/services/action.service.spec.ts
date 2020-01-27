@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ActionService } from './action-service.service';
+import { ActionService } from './action.service';
 
 describe('ActionService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

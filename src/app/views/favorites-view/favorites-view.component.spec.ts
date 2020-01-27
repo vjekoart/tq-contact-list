@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AllContactsComponent } from './all-contacts.component';
+import { FavoritesViewComponent } from './favorites-view.component';
 
-describe('AllContactsComponent', () => {
-  let component: AllContactsComponent;
-  let fixture: ComponentFixture<AllContactsComponent>;
+describe('FavoritesViewComponent', () => {
+  let component: FavoritesViewComponent;
+  let fixture: ComponentFixture<FavoritesViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AllContactsComponent ]
+      declarations: [ FavoritesViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AllContactsComponent);
+    fixture = TestBed.createComponent(FavoritesViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

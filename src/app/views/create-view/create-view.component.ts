@@ -6,11 +6,11 @@ import { ActionService } from 'src/app/services/action.service';
 import { StoreService, ContactModel, CreateContactModel } from 'src/app/services/store.service';
 
 @Component({
-  selector: 'app-create-contact',
-  templateUrl: './create-contact.component.html',
-  styleUrls: ['./create-contact.component.scss']
+  selector: 'app-create-view',
+  templateUrl: './create-view.component.html',
+  styleUrls: ['./create-view.component.scss']
 })
-export class CreateContactComponent implements OnInit {
+export class CreateViewComponent implements OnInit {
 
   constructor(
     public action: ActionService,

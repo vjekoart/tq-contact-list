@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { StoreService } from 'src/app/services/store.service';
 
-const _tag = '[ActionService]';
+const TAG = '[ActionService]';
 
 @Injectable({
   providedIn: 'root'

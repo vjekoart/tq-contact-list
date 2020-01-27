@@ -8,7 +8,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 
-const defaultImage: string = 'assets/img/person.png';
+const defaultImage = 'assets/img/person.png';
 
 @Component({
   selector: 'app-contact-box',
@@ -16,31 +16,34 @@ const defaultImage: string = 'assets/img/person.png';
   styleUrls: ['./contact-box.component.scss']
 })
 export class ContactBoxComponent implements OnInit, OnChanges {
-  @Input('favorited') contactFavorited: boolean = false;
-  @Input('image') contactImage: string = defaultImage;
-  @Input('name') contactName: string = '[Unknown Contact]';
+  @Input() name = '[Unknown Contact]';
+  @Input() image: string = defaultImage;
+  @Input() favorited = false;
 
-  @Output() onOpen = new EventEmitter<void>();
-  @Output() onFavorite = new EventEmitter<void>();
-  @Output() onEdit = new EventEmitter<void>();
-  @Output() onDelete = new EventEmitter<void>();
+  @Output() openAction = new EventEmitter<void>();
+  @Output() favoriteAction = new EventEmitter<void>();
+  @Output() editAction = new EventEmitter<void>();
+  @Output() deleteAction = new EventEmitter<void>();
 
   constructor() {}
 
   ngOnInit() {
-    if (!this.contactImage)
-      this.contactImage = this.sanitizeContactImage(this.contactImage);
+    if (!this.image) {
+      this.image = this.sanitizeContactImage(this.image);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.contactImage)
-      this.contactImage = this.sanitizeContactImage(changes.contactImage.currentValue);
+    if (changes.image) {
+      this.image = this.sanitizeContactImage(changes.image.currentValue);
+    }
   }
 
   private sanitizeContactImage(image?: string): string {
-    if (!this.contactImage || typeof this.contactImage !== 'string')
+    if (!this.image || typeof this.image !== 'string') {
       return defaultImage;
+    }
 
-    return this.contactImage;
+    return this.image;
   }
 }
