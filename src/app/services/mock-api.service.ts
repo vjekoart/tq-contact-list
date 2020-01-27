@@ -15,7 +15,7 @@ export type ReqAction = 'get-one' |
 export class MockApiService {
 
   private localStorageKey = 'tq-contact-list';
-  private memory: any = {};
+  private memory: Array<any> = [];
 
   constructor() {}
 
@@ -32,12 +32,17 @@ export class MockApiService {
               const jsonData = response.json();
               return jsonData;
             } catch (error) {
-              console.warn(TAG, 'Error while parsing preset contact list, setting empty data.', error);
-              return {};
+              console.warn(TAG, 'Error while parsing preset data, setting empty data.', error);
+              return { data: [] };
             }
           })
           .then(jsonResponse => {
-            this.memory = jsonResponse;
+            if (!jsonResponse || !jsonResponse.data) {
+              this.memory = [];
+            } else {
+              this.memory = jsonResponse.data;
+            }
+
             resolve(true);
           });
 
@@ -45,10 +50,16 @@ export class MockApiService {
       }
 
       try {
-        this.memory = JSON.parse(existingValue);
+        const savedJson = JSON.parse(existingValue);
+
+        if (!savedJson || !savedJson.data) {
+          this.memory = [];
+        } else {
+          this.memory = savedJson.data;
+        }
       } catch (error) {
         console.warn(TAG, 'Error while parsing existing data in localStorage, setting empty data.', error);
-        this.memory = {};
+        this.memory = [];
       }
 
       resolve(true);
@@ -58,22 +69,22 @@ export class MockApiService {
   public async request(action: ReqAction, payload: any): Promise<any> {
     switch (action) {
       case 'get-one':
-        return this.getOne('contacts', payload.id);
+        return this.getOne(payload.id);
 
       case 'get-all':
-        return this.getAll('contacts', payload.keyword);
+        return this.getAll(payload.keyword);
 
       case 'get-fav':
-        return this.getFavorites('contacts', payload.keyword);
+        return this.getFavorites(payload.keyword);
 
       case 'create':
-        return this.createOne('contacts', payload.data);
+        return this.createOne(payload.data);
 
       case 'update':
-        return this.updateOne('contacts', payload.id, payload.data);
+        return this.updateOne(payload.id, payload.data);
 
       case 'delete':
-        return this.deleteOne('contacts', payload.id);
+        return this.deleteOne(payload.id);
 
       default:
         console.warn(TAG, 'request: unknown action');
@@ -81,15 +92,15 @@ export class MockApiService {
     }
   }
 
-  private async getOne(key: string, id: number): Promise<any> {
-    const collection = this.memory[key];
+  private async getOne(id: number): Promise<any> {
+    const collection = this.memory;
     const target = collection.find(el => el.id === id);
 
     return target;
   }
 
-  private async getAll(key: string, keyword?: string): Promise<any[]> {
-    const collection = this.memory[key];
+  private async getAll(keyword?: string): Promise<any[]> {
+    const collection = this.memory;
 
     return collection.filter(el => {
       if (!keyword) {
@@ -100,8 +111,8 @@ export class MockApiService {
     });
   }
 
-  private async getFavorites(key: string, keyword?: string): Promise<any> {
-    const collection = this.memory[key];
+  private async getFavorites(keyword?: string): Promise<any> {
+    const collection = this.memory;
 
     return collection.filter(el => {
       if (!el.favorited) {
@@ -116,8 +127,8 @@ export class MockApiService {
     });
   }
 
-  private async createOne(key: string, data: any): Promise<any> {
-    const collection = this.memory[key];
+  private async createOne(data: any): Promise<any> {
+    const collection = this.memory;
 
     let maxId = -1;
 
@@ -129,14 +140,14 @@ export class MockApiService {
       id: ++maxId
     }, data);
 
-    this.memory[key].push(finalData);
+    this.memory.push(finalData);
     this.saveMemory();
 
     return finalData;
   }
 
-  private async updateOne(key: string, id: number, data: any): Promise<any> {
-    const collection = this.memory[key];
+  private async updateOne(id: number, data: any): Promise<any> {
+    const collection = this.memory;
     const collectionLength = collection.length;
 
     for (let i = 0; i < collectionLength; ++i) {
@@ -146,15 +157,15 @@ export class MockApiService {
 
       const finalData = Object.assign(collection[i], data);
 
-      this.memory[key][i] = finalData;
+      this.memory[i] = finalData;
       this.saveMemory();
 
       return finalData;
     }
   }
 
-  private async deleteOne(key: string, id: number): Promise<boolean> {
-    const collection = this.memory[key];
+  private async deleteOne(id: number): Promise<boolean> {
+    const collection = this.memory;
     const collectionLength = collection.length;
 
     for (let i = 0; i < collectionLength; ++i) {
@@ -162,7 +173,7 @@ export class MockApiService {
         continue;
       }
 
-      this.memory[key].splice(i, 1);
+      this.memory.splice(i, 1);
       this.saveMemory();
 
       return true;
@@ -172,6 +183,9 @@ export class MockApiService {
   }
 
   private saveMemory() {
-    window.localStorage.setItem(this.localStorageKey, JSON.stringify(this.memory));
+    const key = this.localStorageKey;
+    const data = { data: this.memory };
+
+    window.localStorage.setItem(key, JSON.stringify(data));
   }
 }

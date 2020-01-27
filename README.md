@@ -62,10 +62,6 @@ The goal of this application is to implement architecture with unidirectional da
 4. Delete functionality (DeleteDialogComponent, DeleteDialogService)
 5. Add TQ favicon
 
-Questions:
-
-1. Search, and then delete/favorite contact, handle that case
-
 ---
 
 *This project is licensed under the terms of the MIT license.*

@@ -67,7 +67,7 @@ export class StoreService {
       .then(contact => {
         if (contact) {
           this.store.contact = contact;
-          this.subjectContact.next(Object.assign({}, this.store).contact);
+          this.subjectContact.next(this.store.contact);
           return;
         }
 
@@ -86,7 +86,7 @@ export class StoreService {
       .then(contacts => {
         if (contacts) {
           this.store.contacts = contacts;
-          this.subjectContacts.next(Object.assign({}, this.store).contacts);
+          this.subjectContacts.next(this.store.contacts);
           return;
         }
 
@@ -105,7 +105,7 @@ export class StoreService {
       .then(favorites => {
         if (favorites) {
           this.store.favorites = favorites;
-          this.subjectFavorites.next(Object.assign({}, this.store).favorites);
+          this.subjectFavorites.next(this.store.favorites);
           return;
         }
 
@@ -118,13 +118,17 @@ export class StoreService {
 
   /**
    * Create new contact and update store.
+   *
+   * Note: this function won't add contact to list of favorited contacts,
+   * since newly created contact cannot be favorited.
    */
   public createOne(data: CreateContactModel): void {
     this.apiService.request('create', { data })
       .then(createdContact => {
         if (createdContact) {
           // Add contact to store
-          this.addContact(createdContact);
+          this.store.contacts.push(createdContact);
+          this.subjectContacts.next(this.store.contacts);
           return;
         }
 
@@ -175,51 +179,44 @@ export class StoreService {
   }
 
   /**
-   * Add new contact to store.
-   *
-   * Note: this function won't add contact to list of favorited contacts,
-   * since newly created contact cannot be favorited.
-   */
-  private addContact(contact: ContactModel): void {
-    this.store.contacts.push(contact);
-    this.subjectContacts.next(Object.assign({}, this.store).contacts);
-  }
-
-  /**
    * Update all local references of contact with provided ID.
    */
   private updateContact(contact: ContactModel): void {
     // Update active contact
     if (this.store.contact && this.store.contact.id === contact.id) {
       this.store.contact = contact;
-      this.subjectContact.next(Object.assign({}, this.store).contact);
+      this.subjectContact.next(this.store.contact);
     }
 
     // Update in all contacts
     const contactsCount = this.store.contacts.length;
 
     for (let i = 0; i < contactsCount; ++i) {
-      if (this.store.contacts[i].id === contact.id) {
-        this.store.contacts[i] = contact;
-        this.subjectContacts.next(Object.assign({}, this.store).contacts);
-        break;
+      if (this.store.contacts[i].id !== contact.id) {
+        continue;
       }
+
+      this.store.contacts[i] = contact;
+      this.subjectContacts.next(this.store.contacts);
+      break;
     }
 
     // Update in favorite contacts
     const favoritesCount = this.store.favorites.length;
 
     for (let i = 0; i < favoritesCount; ++i) {
-      if (this.store.favorites[i].id === contact.id) {
-        if (contact.favorited) {
-          this.store.favorites[i] = contact;
-        } else {
-          this.store.favorites.splice(i, 1);
-        }
-
-        this.subjectFavorites.next(Object.assign({}, this.store).favorites);
-        break;
+      if (this.store.favorites[i].id !== contact.id) {
+        continue;
       }
+
+      if (contact.favorited) {
+        this.store.favorites[i] = contact;
+      } else {
+        this.store.favorites.splice(i, 1);
+      }
+
+      this.subjectFavorites.next(this.store.favorites);
+      break;
     }
   }
 
@@ -230,33 +227,33 @@ export class StoreService {
     // Remove active contact
     if (this.store.contact && this.store.contact.id === id) {
       this.store.contact = null;
-      this.subjectContact.next(Object.assign({}, this.store).contact);
+      this.subjectContact.next(this.store.contact);
     }
 
     // Remove from all contacts
     const contactsCount = this.store.contacts.length;
 
     for (let i = 0; i < contactsCount; ++i) {
-      const contact = this.store.contacts[i];
-
-      if (contact.id === id) {
-        this.store.contacts.splice(i, 1);
-        this.subjectContacts.next(Object.assign({}, this.store).contacts);
-        break;
+      if (this.store.contacts[i].id !== id) {
+        continue;
       }
+
+      this.store.contacts.splice(i, 1);
+      this.subjectContacts.next(this.store.contacts);
+      break;
     }
 
     // Remove from favorites
     const favoritesCount = this.store.favorites.length;
 
     for (let i = 0; i < favoritesCount; ++i) {
-      const contact = this.store.favorites[i];
-
-      if (contact.id === id) {
-        this.store.favorites.splice(i, 1);
-        this.subjectFavorites.next(Object.assign({}, this.store).favorites);
-        break;
+      if (this.store.favorites[i].id !== id) {
+        continue;
       }
+
+      this.store.favorites.splice(i, 1);
+      this.subjectFavorites.next(this.store.favorites);
+      break;
     }
   }
 }
