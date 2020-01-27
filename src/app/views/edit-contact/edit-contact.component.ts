@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { ActionService } from 'src/app/services/action.service';
-import { DataService, ContactModel } from 'src/app/services/data.service';
+import { StoreService, ContactModel } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-edit-contact',
@@ -18,7 +18,7 @@ export class EditContactComponent implements OnInit {
 
   constructor(
     public action: ActionService,
-    public store: DataService,
+    public store: StoreService,
     public location: Location,
     private route: ActivatedRoute,
     public router: Router
@@ -32,6 +32,6 @@ export class EditContactComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.contactId = parseInt(params.get('id'), 10);
       this.action.getContact(this.contactId);
-    })
+    });
   }
 }

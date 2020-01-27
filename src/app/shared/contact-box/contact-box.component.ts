@@ -10,11 +10,6 @@ import {
 
 const defaultImage: string = 'assets/img/person.png';
 
-export interface FavoriteContactEvent {
-  id: number;
-  favorite: boolean;
-}
-
 @Component({
   selector: 'app-contact-box',
   templateUrl: './contact-box.component.html',
@@ -23,7 +18,7 @@ export interface FavoriteContactEvent {
 export class ContactBoxComponent implements OnInit, OnChanges {
   @Input('favorited') contactFavorited: boolean = false;
   @Input('image') contactImage: string = defaultImage;
-  @Input('name') contactName: string = 'unknown';
+  @Input('name') contactName: string = '[Unknown Contact]';
 
   @Output() onOpen = new EventEmitter<void>();
   @Output() onFavorite = new EventEmitter<void>();

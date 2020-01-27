@@ -20,6 +20,7 @@ import { ContactImageComponent } from './shared/contact-image/contact-image.comp
 import { ContactAddBoxComponent } from './shared/contact-add-box/contact-add-box.component';
 import { SearchFieldComponent } from './shared/search-field/search-field.component';
 import { ContactListComponent } from './shared/contact-list/contact-list.component';
+import { ContactFormComponent } from './shared/contact-form/contact-form.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ContactListComponent } from './shared/contact-list/contact-list.compone
     ContactImageComponent,
     ContactAddBoxComponent,
     SearchFieldComponent,
-    ContactListComponent
+    ContactListComponent,
+    ContactFormComponent
   ],
   imports: [
     BrowserModule,

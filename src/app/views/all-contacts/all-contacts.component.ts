@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { ActionService } from 'src/app/services/action.service';
-import { DataService, ContactModel } from 'src/app/services/data.service';
+import { StoreService, ContactModel } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-all-contacts',
@@ -16,7 +16,7 @@ export class AllContactsComponent implements OnInit {
 
   constructor(
     public action: ActionService,
-    public store: DataService,
+    public store: StoreService,
     public router: Router
   ) {}
 

@@ -1,10 +1,10 @@
 <div class="container">
-  <a class="contact-information fake-link" (click)="onOpen.emit()">
+  <a class="fake-link contact-information" (click)="onOpen.emit()">
     <app-contact-image [image]="contactImage" [name]="contactName"></app-contact-image>
     <p class="contact-name">{{ contactName }}</p>
   </a>
   <div class="contact-actions">
-    <a class="fake-link" (click)="onDelee.emit()">
+    <a class="fake-link" (click)="onDelete.emit()">
       <img class="delete-icon" alt="Delete" src="assets/icons/icon-delete.svg">
     </a>
     <a class="fake-link" (click)="onEdit.emit()">

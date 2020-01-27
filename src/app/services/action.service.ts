@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 
-import { DataService } from 'src/app/services/data.service';
+import { StoreService } from 'src/app/services/store.service';
+
+const _tag = '[ActionService]';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActionService {
 
-  constructor(private store: DataService) {}
+  constructor(private store: StoreService) {}
 
   public getContacts(keyword?: string) {
     this.store.getAll(keyword);

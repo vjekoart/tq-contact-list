@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DataService } from 'src/app/services/data.service';
+import { StoreService } from 'src/app/services/store.service';
 import { MockApiService } from 'src/app/services/mock-api.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { MockApiService } from 'src/app/services/mock-api.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private dataService: DataService, private apiService: MockApiService) {}
+  constructor(private store: StoreService, private apiService: MockApiService) {}
 
   public ready: boolean = false;
   public fatal: boolean = false;
@@ -19,14 +19,14 @@ export class AppComponent implements OnInit {
 
     if (!apiStatus) {
       this.fatal = true;
-      return
+      return;
     }
 
-    const dataStatus: boolean = await this.dataService.init();
+    const dataStatus: boolean = await this.store.init();
 
     if (!dataStatus) {
       this.fatal = true;
-      return
+      return;
     }
 
     this.ready = true;

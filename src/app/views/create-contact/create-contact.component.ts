@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { ActionService } from 'src/app/services/action.service';
-import { DataService, ContactModel } from 'src/app/services/data.service';
+import { StoreService, ContactModel, CreateContactModel } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-create-contact',
@@ -14,7 +14,7 @@ export class CreateContactComponent implements OnInit {
 
   constructor(
     public action: ActionService,
-    public store: DataService,
+    public store: StoreService,
     public location: Location,
     public router: Router
   ) {}

@@ -17,10 +17,18 @@ export class MockApiService {
       const existingValue = window.localStorage.getItem(this.localStorageKey);
 
       if (!existingValue) {
-        console.log(_tag, 'Since there is no existing data, preset contact list will be populated.');
+        console.info(_tag, 'No existing data in localStorage, preset contact list will be used.');
 
         window.fetch('assets/mock-data.json')
-          .then(response => response.json())
+          .then(response => {
+            try {
+              const jsonData = response.json();
+              return jsonData;
+            } catch (error) {
+              console.warn(_tag, 'Error while parsing preset contact list, setting empty data.', error);
+              return {};
+            }
+          })
           .then(jsonResponse => {
             this.memory = jsonResponse;
             resolve(true);
@@ -32,7 +40,7 @@ export class MockApiService {
       try {
         this.memory = JSON.parse(existingValue);
       } catch (error) {
-        console.error(_tag, 'Error while parsing existing localStorage value.', error);
+        console.warn(_tag, 'Error while parsing existing data in localStorage, setting empty data.', error);
         this.memory = {};
       }
 
