@@ -2,6 +2,13 @@ import { Injectable } from '@angular/core';
 
 const TAG = '[MockApiService]';
 
+export type ReqAction = 'get-one' |
+                        'get-all' |
+                        'get-fav' |
+                        'create' |
+                        'update' |
+                        'delete';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -48,56 +55,123 @@ export class MockApiService {
     });
   }
 
-  public async getValue(key: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (!key || typeof this.memory[key] === 'undefined') {
-        resolve(null);
-        return;
+  public async request(action: ReqAction, payload: any): Promise<any> {
+    switch (action) {
+      case 'get-one':
+        return this.getOne('contacts', payload.id);
+
+      case 'get-all':
+        return this.getAll('contacts', payload.keyword);
+
+      case 'get-fav':
+        return this.getFavorites('contacts', payload.keyword);
+
+      case 'create':
+        return this.createOne('contacts', payload.data);
+
+      case 'update':
+        return this.updateOne('contacts', payload.id, payload.data);
+
+      case 'delete':
+        return this.deleteOne('contacts', payload.id);
+
+      default:
+        console.warn(TAG, 'request: unknown action');
+        break;
+    }
+  }
+
+  private async getOne(key: string, id: number): Promise<any> {
+    const collection = this.memory[key];
+    const target = collection.find(el => el.id === id);
+
+    return target;
+  }
+
+  private async getAll(key: string, keyword?: string): Promise<any[]> {
+    const collection = this.memory[key];
+
+    return collection.filter(el => {
+      if (!keyword) {
+        return true;
       }
 
-      resolve(this.memory[key]);
+      return el.name.toLowerCase().includes(keyword.toLowerCase());
     });
   }
 
-  public async updateValue(key: string, value: any): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      if (!key || typeof this.memory[key] === 'undefined') {
-        resolve(false);
-        return;
+  private async getFavorites(key: string, keyword?: string): Promise<any> {
+    const collection = this.memory[key];
+
+    return collection.filter(el => {
+      if (!el.favorited) {
+        return false;
       }
 
-      this.memory[key] = value;
-      window.localStorage.setItem(this.localStorageKey, JSON.stringify(this.memory));
+      if (!keyword) {
+        return true;
+      }
 
-      resolve(true);
+      return el.name.toLowerCase().includes(keyword.toLowerCase());
     });
   }
 
-  public async deleteValue(key: string): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      if (!key || typeof this.memory[key] === 'undefined') {
-        resolve(false);
-        return;
-      }
+  private async createOne(key: string, data: any): Promise<any> {
+    const collection = this.memory[key];
 
-      delete this.memory[key];
-      window.localStorage.setItem(this.localStorageKey, JSON.stringify(this.memory));
+    let maxId = -1;
 
-      resolve(true);
+    collection.forEach(el => {
+      maxId = el.id > maxId ? el.id : maxId;
     });
+
+    const finalData = Object.assign({
+      id: ++maxId
+    }, data);
+
+    this.memory[key].push(finalData);
+    this.saveMemory();
+
+    return finalData;
   }
 
-  public async createValue(key: string, value: any): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      if (!key || typeof this.memory[key] !== 'undefined') {
-        resolve(false);
-        return;
+  private async updateOne(key: string, id: number, data: any): Promise<any> {
+    const collection = this.memory[key];
+    const collectionLength = collection.length;
+
+    for (let i = 0; i < collectionLength; ++i) {
+      if (collection[i].id !== id) {
+        continue;
       }
 
-      this.memory[key] = value;
-      window.localStorage.setItem(this.localStorageKey, JSON.stringify(this.memory));
+      const finalData = Object.assign(collection[i], data);
 
-      resolve(true);
-    });
+      this.memory[key][i] = finalData;
+      this.saveMemory();
+
+      return finalData;
+    }
+  }
+
+  private async deleteOne(key: string, id: number): Promise<boolean> {
+    const collection = this.memory[key];
+    const collectionLength = collection.length;
+
+    for (let i = 0; i < collectionLength; ++i) {
+      if (collection[i].id !== id) {
+        continue;
+      }
+
+      this.memory[key].splice(i, 1);
+      this.saveMemory();
+
+      return true;
+    }
+
+    return false;
+  }
+
+  private saveMemory() {
+    window.localStorage.setItem(this.localStorageKey, JSON.stringify(this.memory));
   }
 }

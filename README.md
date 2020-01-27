@@ -2,15 +2,16 @@
 
 Angular web application for contact management.
 
-*Libraries & Languages: Angular, Karma, Protractor, TypeScript, SCSS*
+*Libraries & Languages: Angular, Karma, Protractor, SCSS, TypeScript*
 
 *Environment: Node 10.16.2, Angular CLI 8.3.23, Angular 8.2.14*
 
-*This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.23.*
+1. Usage
+2. Architecture
 
 ## Usage
 
-During usage mock data is used, which is defined in the `src/assets/mock-data.json` file. Keep in mind that data is saved in localStorage. To reset state to initial mock data status, run `localStorage.clear()` in browser console and refresh the page.
+This application has mock data, which is defined in the `src/assets/mock-data.json` file. During the usage, data is stored in the *localStorage*. To reset to initial state, run `localStorage.clear()` in browser console and refresh the page.
 
 ### Development Usage
 
@@ -34,14 +35,17 @@ ng serve --port 4300
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Functionality
+## Architecture
 
-### Form Validations
+The goal of this application is to implement architecture with unidirectional data flow.
 
-* Field for full name must not be empty.
-* Field for email can be empty, and if not it should look like an email address (regex).
-* Field for phone number may only contain numbers and character `+`.
-* Field for phone name must not be empty.
+* Components
+    * Listen to observables from *StoreService*, and trigger actions via *ActionService*.
+    * Components are organized into views and shared components.
+* *ActionService*
+    * Handle actions, call *StoreService* and other services.
+* *StoreService*
+    * Store and expose application data via observable properties.
 
 ## Roadmap
 
@@ -56,6 +60,11 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 2. Create page with form validation
 3. Edit page with form validation
 4. Delete functionality (DeleteDialogComponent, DeleteDialogService)
+5. Add TQ favicon
+
+Questions:
+
+1. Search, and then delete/favorite contact, handle that case
 
 ---
 

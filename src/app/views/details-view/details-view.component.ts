@@ -13,7 +13,7 @@ import { StoreService, ContactModel } from 'src/app/services/store.service';
 })
 export class DetailsViewComponent implements OnInit {
 
-  public contact: Observable<ContactModel | {}>;
+  public contact: Observable<ContactModel|null>;
   public contactId: number;
 
   constructor(
@@ -25,7 +25,7 @@ export class DetailsViewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // TODO: If contact doesn't exists, go to dashboard
+    // TODO: If contact doesn't exists, go to dashboard (listen for changes)
     this.contact = this.store.contact$;
     this.route.paramMap.subscribe(params => {
       this.contactId = parseInt(params.get('id'), 10);

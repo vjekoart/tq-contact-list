@@ -13,7 +13,7 @@ import { StoreService, ContactModel } from 'src/app/services/store.service';
 })
 export class EditViewComponent implements OnInit {
 
-  public contact: Observable<ContactModel | {}>;
+  public contact: Observable<ContactModel|null>;
   public contactId: number;
 
   constructor(
@@ -25,7 +25,7 @@ export class EditViewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // TODO: If contact doesn't exists, go to dashboard
+    // TODO: If contact doesn't exists, go to dashboard (listen for changes)
     // TODO: When contact is deleted, go to homepage
     // TODO: Handle form errors
     this.contact = this.store.contact$;

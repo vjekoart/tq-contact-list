@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 
-import { MockApiService } from 'src/app/services/mock-api.service';
+import { MockApiService, ReqAction } from 'src/app/services/mock-api.service';
 
 const TAG = '[StoreService]';
 
@@ -33,16 +33,16 @@ export interface CreateContactModel {
 export class StoreService {
 
   private store: {
-    contact: ContactModel | {},
+    contact: ContactModel|null,
     contacts: ContactModel[],
     favorites: ContactModel[]
   } = {
-    contact: {},
+    contact: null,
     contacts: [],
     favorites: []
   };
 
-  private subjectContact = new BehaviorSubject<ContactModel | {}>({});
+  private subjectContact = new BehaviorSubject<ContactModel|null>(null);
   private subjectContacts = new BehaviorSubject<ContactModel[]>([]);
   private subjectFavorites = new BehaviorSubject<ContactModel[]>([]);
 
@@ -53,200 +53,210 @@ export class StoreService {
   constructor(private apiService: MockApiService) {}
 
   /**
-   * Placeholder function. In real world it may be required to do some setup or
-   * API calls before store is ready.
+   * Placeholder.
    */
   public async init(): Promise<boolean> {
     return new Promise((resolve, reject) => resolve(true));
   }
 
   /**
-   * Update state of storeService.contact observable with
-   * desired contact.
+   * Get contact by ID.
    */
   public getOne(id: number): void {
-    this.apiService.getValue('contacts').then((contacts: ContactModel[]) => {
-      const target = contacts.find(el => el.id === id);
+    this.apiService.request('get-one', { id })
+      .then(contact => {
+        if (contact) {
+          this.store.contact = contact;
+          this.subjectContact.next(Object.assign({}, this.store).contact);
+          return;
+        }
 
-      if (!target) {
-        return;
-      }
-
-      this.subjectContact.next(Object.assign({}, target));
-    });
+        // TODO: Handle error
+      })
+      .catch(error => {
+        // TODO: Handle error
+      });
   }
 
   /**
-   * Update state of storeService.contacts observable with all available
-   * contacts.
+   * Get all contacts. If set, filter by keyword.
    */
   public getAll(keyword?: string): void {
-    this.apiService.getValue('contacts').then((contacts: ContactModel[]) => {
-      this.store.contacts = contacts.filter(contact => {
-        if (!keyword) {
-          return true;
+    this.apiService.request('get-all', { keyword })
+      .then(contacts => {
+        if (contacts) {
+          this.store.contacts = contacts;
+          this.subjectContacts.next(Object.assign({}, this.store).contacts);
+          return;
         }
 
-        if (contact.name.toLowerCase().includes(keyword.toLowerCase())) {
-          return true;
-        }
-
-        return false;
+        // TODO: Handle error
+      })
+      .catch(error => {
+        // TODO: Handle error
       });
-
-      this.subjectContacts.next(Object.assign({}, this.store).contacts);
-    });
   }
 
   /**
-   * Update state of storeService.favorites observable with all favorited
-   * contacts.
+   * Get all favorite contacts. If set, filter by keyword.
    */
   public getFavorites(keyword?: string): void {
-    this.apiService.getValue('contacts').then((contacts: ContactModel[]) => {
-      this.store.favorites = contacts.filter(contact => {
-        if (!contact.favorited) {
-          return false;
+    this.apiService.request('get-fav', { keyword })
+      .then(favorites => {
+        if (favorites) {
+          this.store.favorites = favorites;
+          this.subjectFavorites.next(Object.assign({}, this.store).favorites);
+          return;
         }
 
-        if (!keyword) {
-          return true;
-        }
-
-        if (contact.name.toLowerCase().includes(keyword.toLowerCase())) {
-          return true;
-        }
-
-        return false;
+        // TODO: Handle error
+      })
+      .catch(error => {
+        // TODO: Handle error
       });
-
-      this.subjectFavorites.next(Object.assign({}, this.store).favorites);
-    });
   }
 
   /**
-   * Create new contact, and update storeService.contacts
-   * storeService.favorites (if required) observables with newly created
-   * contact.
+   * Create new contact and update store.
    */
-  public createOne(newContact: CreateContactModel): void {
-    this.apiService.getValue('contacts').then((contacts: ContactModel[]) => {
-      let maxId = -1;
+  public createOne(data: CreateContactModel): void {
+    this.apiService.request('create', { data })
+      .then(createdContact => {
+        if (createdContact) {
+          // Add contact to store
+          this.addContact(createdContact);
+          return;
+        }
 
-      contacts.forEach(el => {
-        maxId = el.id > maxId ? el.id : maxId;
+        // TODO: Handle error
+      })
+      .catch(error => {
+        // TODO: Handle error
       });
-
-      const finalContact: ContactModel = Object.assign({
-        id: ++maxId,
-        favorited: (newContact.favorited === true) || false
-      }, newContact);
-
-      contacts.push(finalContact);
-
-      this.store.contacts = contacts;
-      this.apiService.updateValue('contacts', this.store.contacts);
-      this.subjectContacts.next(Object.assign({}, this.store).contacts);
-
-      // If applicable, add new contact to favorites
-      if (finalContact.favorited !== true) {
-        return;
-      }
-
-      this.store.favorites.push(finalContact);
-      this.subjectFavorites.next(Object.assign({}, this.store).favorites);
-    });
   }
 
   /**
    * Update existing contact with provided ID with new properties provided
-   * in newState object.
+   * in data object and update store.
    */
-  public updateOne(id: number, newState: any): void {
-    // Update all contacts
-    let contactsIndex = -1;
+  public updateOne(id: number, data: any): void {
+    this.apiService.request('update', { id, data })
+      .then(updatedContact => {
+        if (updatedContact) {
+          // Update local copy
+          this.updateContact(updatedContact);
+          return;
+        }
 
-    const inContacts = this.store.contacts.find((el, i) => {
-      if (el.id === id) {
-        contactsIndex = i;
-        return true;
-      }
-
-      return false;
-    });
-
-    const newContact = Object.assign(inContacts, newState);
-
-    this.store.contacts[contactsIndex] = newContact;
-    this.apiService.updateValue('contacts', this.store.contacts);
-    this.subjectContacts.next(Object.assign({}, this.store).contacts);
-
-    // Update favorites
-    let favoritesIndex = -1;
-
-    const inFavorites = this.store.favorites.find((el, i) => {
-      if (el.id === id) {
-        favoritesIndex = i;
-        return true;
-      }
-
-      return false;
-    });
-
-    if (favoritesIndex > -1) {
-      if (newContact.favorited) {
-        this.store.favorites[favoritesIndex] = newContact;
-      } else {
-        this.store.favorites.splice(favoritesIndex, 1);
-      }
-    } else if (newContact.favorited) {
-      this.store.favorites.push(newContact);
-    }
-
-    this.subjectFavorites.next(Object.assign({}, this.store).favorites);
+        // TODO: Handle error
+      })
+      .catch(error => {
+        // TODO: Handle error
+      });
   }
 
   /**
-   * Delete existing contact with provided ID.
+   * Delete existing contact with provided ID and update store.
    */
   public deleteOne(id: number): void {
-    // Delete from all contacts
-    let contactsIndex = -1;
+    this.apiService.request('delete', { id })
+      .then(status => {
+        if (status) {
+          // Delete local copy
+          this.removeContact(id);
+          return;
+        }
 
-    const inContacts = this.store.contacts.find((el, i) => {
-      if (el.id === id) {
-        contactsIndex = i;
-        return true;
-      }
+        // TODO: Handle error
+      })
+      .catch(error => {
+        // TODO: Handle error
+      });
+  }
 
-      return false;
-    });
-
-    if (!inContacts) {
-      return;
-    }
-
-    this.store.contacts.splice(contactsIndex, 1);
-    this.apiService.updateValue('contacts', this.store.contacts);
+  /**
+   * Add new contact to store.
+   *
+   * Note: this function won't add contact to list of favorited contacts,
+   * since newly created contact cannot be favorited.
+   */
+  private addContact(contact: ContactModel): void {
+    this.store.contacts.push(contact);
     this.subjectContacts.next(Object.assign({}, this.store).contacts);
+  }
 
-    // Delete from favorites
-    let favoritesIndex = -1;
-
-    const inFavorites = this.store.favorites.find((el, i) => {
-      if (el.id === id) {
-        favoritesIndex = i;
-        return true;
-      }
-
-      return false;
-    });
-
-    if (!inFavorites) {
-      return;
+  /**
+   * Update all local references of contact with provided ID.
+   */
+  private updateContact(contact: ContactModel): void {
+    // Update active contact
+    if (this.store.contact && this.store.contact.id === contact.id) {
+      this.store.contact = contact;
+      this.subjectContact.next(Object.assign({}, this.store).contact);
     }
 
-    this.store.favorites.splice(favoritesIndex, 1);
-    this.subjectFavorites.next(Object.assign({}, this.store).favorites);
+    // Update in all contacts
+    const contactsCount = this.store.contacts.length;
+
+    for (let i = 0; i < contactsCount; ++i) {
+      if (this.store.contacts[i].id === contact.id) {
+        this.store.contacts[i] = contact;
+        this.subjectContacts.next(Object.assign({}, this.store).contacts);
+        break;
+      }
+    }
+
+    // Update in favorite contacts
+    const favoritesCount = this.store.favorites.length;
+
+    for (let i = 0; i < favoritesCount; ++i) {
+      if (this.store.favorites[i].id === contact.id) {
+        if (contact.favorited) {
+          this.store.favorites[i] = contact;
+        } else {
+          this.store.favorites.splice(i, 1);
+        }
+
+        this.subjectFavorites.next(Object.assign({}, this.store).favorites);
+        break;
+      }
+    }
+  }
+
+  /**
+   * Remove contact from store.
+   */
+  private removeContact(id: number): void {
+    // Remove active contact
+    if (this.store.contact && this.store.contact.id === id) {
+      this.store.contact = null;
+      this.subjectContact.next(Object.assign({}, this.store).contact);
+    }
+
+    // Remove from all contacts
+    const contactsCount = this.store.contacts.length;
+
+    for (let i = 0; i < contactsCount; ++i) {
+      const contact = this.store.contacts[i];
+
+      if (contact.id === id) {
+        this.store.contacts.splice(i, 1);
+        this.subjectContacts.next(Object.assign({}, this.store).contacts);
+        break;
+      }
+    }
+
+    // Remove from favorites
+    const favoritesCount = this.store.favorites.length;
+
+    for (let i = 0; i < favoritesCount; ++i) {
+      const contact = this.store.favorites[i];
+
+      if (contact.id === id) {
+        this.store.favorites.splice(i, 1);
+        this.subjectFavorites.next(Object.assign({}, this.store).favorites);
+        break;
+      }
+    }
   }
 }
