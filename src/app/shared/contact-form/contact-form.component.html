@@ -1,1 +1,88 @@
-<p>contact-form works!</p>
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+
+  <!-- Form header: image, name, back, favorite, edit -->
+  <div class="form-header">
+    <!-- Actions: back -->
+    <a *ngIf="hasBack" class="fake-link action-back" (click)="backAction.emit()">
+      <img class="back-icon" alt="Back" src="assets/icons/icon-back.svg">
+    </a>
+
+    <!-- Actions: favorite, edit -->
+    <div *ngIf="hasDelete || hasEdit || hasFavorite" class="form-contact-actions">
+      <a *ngIf="hasDelete" class="fake-link" (click)="deleteAction.emit()">
+        Delete&nbsp;<img class="delete-icon" alt="Delete" src="assets/icons/icon-delete.svg">
+      </a>
+      <a *ngIf="hasEdit" class="fake-link" (click)="editAction.emit()">
+        <img class="edit-icon" alt="Edit" src="assets/icons/icon-edit.svg">
+      </a>
+      <a *ngIf="hasFavorite" class="fake-link action-favorite" (click)="favoriteAction.emit()">
+        <img *ngIf="favorited"
+          class="favorite-icon"
+          alt="Remove from favorites"
+          src="assets/icons/icon-heart-full.svg">
+        <img *ngIf="!favorited"
+          class="favorite-icon"
+          alt="Add to favorites"
+          src="assets/icons/icon-heart-empty.svg">
+      </a>
+    </div>
+
+    <!-- Image and name -->
+    <div class="form-contact-header">
+      <app-contact-image [image]="image" [name]="name"></app-contact-image>
+      <h2 *ngIf="locked" class="form-contact-name">{{ name }}</h2>
+    </div>
+  </div>
+
+  <!-- Form body: input fields -->
+  <div class="form-body">
+
+    <!-- Full name -->
+    <div *ngIf="!locked" class="form-group">
+      <label for="name">full name</label>
+      <input id="name" type="text" placeholder="Full name" formControlName="name">
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">email</label>
+      <input id="email"
+        type="email"
+        placeholder="Email"
+        formControlName="email"
+        [attr.disabled]="locked">
+    </div>
+
+    <!-- Numbers -->
+    <div class="form-group form-group-array" formArrayName="numbers">
+        <label for="numbers">numbers</label>
+        <div
+          class="form-group-array-item"
+          *ngFor="let number of formNumbers.controls; let i = index">
+          <ng-container [formGroupName]="i">
+            <input type="text"
+              placeholder="Number"
+              formControlName="number"
+              [attr.disabled]="locked">
+            <input type="text"
+              placeholder="Label"
+              formControlName="name"
+              [attr.disabled]="locked">
+            <button *ngIf="!locked"
+              class="button remove-number"
+              (click)="removeNumber($event, i)">x</button>
+          </ng-container>
+        </div>
+        <button *ngIf="!locked"
+          class="button add-number"
+          (click)="addNumber($event)">Add number</button>
+    </div>
+  </div>
+
+  <!-- Form footer: cancel and save buttons -->
+  <div class="form-footer" *ngIf="hasCancel || hasSave">
+    <app-fatal-message *ngIf="fatal.status">{{ fatal.message }}</app-fatal-message>
+    <app-button flavour="inactive" (click)="backAction.emit()">Cancel</app-button>
+    <app-button flavour="primary" (click)="onSubmit()">Save</app-button>
+  </div>
+</form>

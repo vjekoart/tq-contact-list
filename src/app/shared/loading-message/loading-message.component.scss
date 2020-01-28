@@ -1,0 +1,14 @@
+@import 'variables';
+
+.loading-message {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: $color-inactive;
+}
+
+@media (min-width: $breakpoint) {
+  .loading-message {
+    font-size: 14px;
+  }
+}

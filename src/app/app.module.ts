@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,9 @@ import { ContactAddBoxComponent } from './shared/contact-add-box/contact-add-box
 import { SearchFieldComponent } from './shared/search-field/search-field.component';
 import { ContactListComponent } from './shared/contact-list/contact-list.component';
 import { ContactFormComponent } from './shared/contact-form/contact-form.component';
+import { LoadingMessageComponent } from './shared/loading-message/loading-message.component';
+import { FatalMessageComponent } from './shared/fatal-message/fatal-message.component';
+import { ButtonComponent } from './shared/button/button.component';
 
 @NgModule({
   declarations: [
@@ -36,12 +40,16 @@ import { ContactFormComponent } from './shared/contact-form/contact-form.compone
     ContactAddBoxComponent,
     SearchFieldComponent,
     ContactListComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    LoadingMessageComponent,
+    FatalMessageComponent,
+    ButtonComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

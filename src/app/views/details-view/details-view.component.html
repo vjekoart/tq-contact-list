@@ -1,4 +1,6 @@
+<app-loading-message *ngIf="!contact">Loading contact...</app-loading-message>
 <app-contact-form
+  *ngIf="contact"
   [name]="contact.name"
   [email]="contact.email"
   [numbers]="contact.numbers"
@@ -10,4 +12,4 @@
   [hasFavorite]="true"
   (backAction)="location.back()"
   (editAction)="router.navigate(['edit', contact.id])"
-  (onFavorite)="action.updateContact(contact.id, { favorited: !contact.favorited })"></app-contact-form>
+  (favoriteAction)="action.updateContact(contact.id, { favorited: !contact.favorited })"></app-contact-form>

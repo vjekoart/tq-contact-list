@@ -1,6 +1,7 @@
 <app-contact-form
+  *ngIf="contact"
   [name]="contact.name"
-  [email="contact.email"
+  [email]="contact.email"
   [numbers]="contact.numbers"
   [image]="contact.image"
   [hasBack]="true"

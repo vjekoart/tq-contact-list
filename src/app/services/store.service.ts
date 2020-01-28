@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 import { MockApiService, ReqAction } from 'src/app/services/mock-api.service';
@@ -27,6 +27,10 @@ export interface CreateContactModel {
   numbers?: ContactNumber[];
 }
 
+export interface UiErrors {
+  contactDoesntExist: { id: number }|null;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -35,20 +39,30 @@ export class StoreService {
   private store: {
     contact: ContactModel|null,
     contacts: ContactModel[],
-    favorites: ContactModel[]
+    favorites: ContactModel[],
+    uiErrors: UiErrors|{}
   } = {
     contact: null,
     contacts: [],
-    favorites: []
+    favorites: [],
+    uiErrors: {}
   };
 
+  // Subjects
   private subjectContact = new BehaviorSubject<ContactModel|null>(null);
   private subjectContacts = new BehaviorSubject<ContactModel[]>([]);
   private subjectFavorites = new BehaviorSubject<ContactModel[]>([]);
+  private subjectUiErrors = new BehaviorSubject<UiErrors|{}>({});
 
   readonly contact$ = this.subjectContact.asObservable();
   readonly contacts$ = this.subjectContacts.asObservable();
   readonly favorites$ = this.subjectFavorites.asObservable();
+  readonly uiErrors$ = this.subjectUiErrors.asObservable();
+
+  // Events
+  readonly contactCreated$: EventEmitter<void> = new EventEmitter();
+  readonly contactUpdated$: EventEmitter<void> = new EventEmitter();
+  readonly contactDeleted$: EventEmitter<void> = new EventEmitter();
 
   constructor(private apiService: MockApiService) {}
 
@@ -71,7 +85,10 @@ export class StoreService {
           return;
         }
 
-        // TODO: Handle error
+        this.store.uiErrors = Object.assign(this.store.uiErrors, {
+          contactDoesntExist: { id }
+        });
+        this.subjectUiErrors.next(this.store.uiErrors);
       })
       .catch(error => {
         // TODO: Handle error
@@ -129,6 +146,7 @@ export class StoreService {
           // Add contact to store
           this.store.contacts.push(createdContact);
           this.subjectContacts.next(this.store.contacts);
+          this.contactCreated$.emit();
           return;
         }
 
@@ -149,6 +167,7 @@ export class StoreService {
         if (updatedContact) {
           // Update local copy
           this.updateContact(updatedContact);
+          this.contactUpdated$.emit();
           return;
         }
 
@@ -168,6 +187,7 @@ export class StoreService {
         if (status) {
           // Delete local copy
           this.removeContact(id);
+          this.contactDeleted$.emit();
           return;
         }
 

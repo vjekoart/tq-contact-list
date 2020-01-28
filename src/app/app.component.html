@@ -1,10 +1,12 @@
 <header>
-  <img id="logo" alt="Typeqast" src="assets/img/logo.svg">
+  <a class="fake-link" (click)="router.navigate([''])">
+    <img id="logo" alt="Typeqast" src="assets/img/logo.svg">
+  </a>
   <div class="bottom-line"></div>
 </header>
 <main>
-  <p *ngIf="!ready && !fatal" class="loading-message">Loading...</p>
-  <p *ngIf="fatal" class="fatal-message">There was an error during application initialization.</p>
+  <app-loading-message *ngIf="!ready && !fatal">Loading...</app-loading-message>
+  <app-fatal-message *ngIf="fatal">There was an error during application initialization.</app-fatal-message>
   <router-outlet *ngIf="ready && !fatal"></router-outlet>
 </main>
 <!-- <footer></footer> -->

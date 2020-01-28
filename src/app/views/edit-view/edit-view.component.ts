@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { ActionService } from 'src/app/services/action.service';
-import { StoreService, ContactModel } from 'src/app/services/store.service';
+import { StoreService, ContactModel, UiErrors } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-edit-view',
@@ -13,7 +13,7 @@ import { StoreService, ContactModel } from 'src/app/services/store.service';
 })
 export class EditViewComponent implements OnInit {
 
-  public contact: Observable<ContactModel|null>;
+  public contact: ContactModel|null = null;
   public contactId: number;
 
   constructor(
@@ -25,13 +25,32 @@ export class EditViewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // TODO: If contact doesn't exists, go to dashboard (listen for changes)
-    // TODO: When contact is deleted, go to homepage
-    // TODO: Handle form errors
-    this.contact = this.store.contact$;
+    // Listen for route changes
     this.route.paramMap.subscribe(params => {
       this.contactId = parseInt(params.get('id'), 10);
       this.action.getContact(this.contactId);
+    });
+
+    // Listen for active contact changes
+    this.store.contact$.subscribe(contact => {
+      this.contact = contact;
+    });
+
+    // If contact doesn't exists, go to dashboard (listen for changes)
+    this.store.uiErrors$.subscribe((uiErrors: UiErrors) => {
+      if (uiErrors.contactDoesntExist && uiErrors.contactDoesntExist.id === this.contactId) {
+        this.router.navigate(['']);
+      }
+    });
+
+    // If contact is deleted, go to dashboard
+    this.store.contactDeleted$.subscribe(() => {
+      this.router.navigate(['']);
+    });
+
+    // If contact is updated, go to details page
+    this.store.contactUpdated$.subscribe(() => {
+      this.router.navigate(['details', this.contact.id]);
     });
   }
 }

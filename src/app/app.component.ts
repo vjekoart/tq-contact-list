@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { StoreService } from 'src/app/services/store.service';
 import { MockApiService } from 'src/app/services/mock-api.service';
@@ -9,7 +10,11 @@ import { MockApiService } from 'src/app/services/mock-api.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private store: StoreService, private apiService: MockApiService) {}
+  constructor(
+    private store: StoreService,
+    private apiService: MockApiService,
+    public router: Router
+  ) {}
 
   public ready = false;
   public fatal = false;

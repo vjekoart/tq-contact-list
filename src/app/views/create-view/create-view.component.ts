@@ -20,7 +20,9 @@ export class CreateViewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // TODO: When contact is created, go to homepage
-    // TODO: Handle form errors
+    // When contact is created, go to dashboard
+    this.store.contactCreated$.subscribe(() => {
+      this.router.navigate(['']);
+    });
   }
 }
