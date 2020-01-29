@@ -16,6 +16,7 @@ const defaultImage = 'assets/img/person.png';
 export class ContactImageComponent implements OnInit, OnChanges {
   @Input() image: string = defaultImage;
   @Input() name: string;
+  @Input() large = false;
 
   constructor() {}
 

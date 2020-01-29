@@ -50,4 +50,11 @@
 
 p {
   margin: 0;
+  display: inline-block;
+}
+
+@media (min-width: $breakpoint) {
+  p {
+    display: block;
+  }
 }

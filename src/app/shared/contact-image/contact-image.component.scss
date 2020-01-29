@@ -8,6 +8,12 @@ img {
 
   border: 3px solid rgba($color-inactive, 0.3);
   border-radius: 100%;
+
+  &.large {
+    width: 156px;
+    height: 156px;
+    margin: 0 auto;
+  }
 }
 
 @media (min-width: $breakpoint) {

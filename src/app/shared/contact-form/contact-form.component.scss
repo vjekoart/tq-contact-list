@@ -1,0 +1,438 @@
+@import 'variables';
+
+form {
+  position: relative;
+
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.action-back {
+  position: absolute;
+  top: 18px;
+  left: 25px;
+}
+
+.form-contact-actions {
+  display: block;
+  overflow: hidden;
+
+  height: 52px;
+  padding: 18px 25px 0;
+
+  text-align: right;
+
+  border-bottom: 1px solid $color-inactive;
+
+  > a {
+    display: block;
+    float: right;
+
+    margin: 0 0 0 32px;
+
+    text-align: center;
+
+    img {
+      vertical-align: text-bottom;
+    }
+  }
+}
+
+.delete-explanation {
+  display: none;
+}
+
+.form-contact-header,
+.form-body,
+.form-footer {
+  margin: 0 25px;
+}
+
+@media (min-width: $breakpoint) {
+  form {
+    max-width: 630px;
+    margin: 0 auto;
+
+    transform: translateX(108px);
+  }
+
+  .action-back {
+    position: absolute;
+    top: unset;
+    bottom: 14px;
+    left: 0;
+  }
+
+  .form-header,
+  .form-contact-header,
+  .form-body,
+  .form-footer {
+    margin: 0;
+  }
+
+  .form-header {
+    position: relative;
+    height: 140px;
+  }
+
+  .form-contact-actions {
+    position: absolute;
+    left: 50%;
+    right: 0;
+    bottom: 0;
+
+    padding-right: 0;
+
+    border-bottom: none;
+  }
+
+  .delete-explanation {
+    display: inline;
+    font-size: 14px;
+    color: $color-inactive;
+  }
+}
+
+.form-contact-header {
+  position: relative;
+
+  &:not(.large) {
+    height: 100px;
+  }
+
+  &.large {
+    height: 193px;
+    padding-top: 20px;
+  }
+}
+
+@media (min-width: $breakpoint) {
+  .form-contact-header {
+    &.large,
+    &:not(.large) {
+      position: static;
+      height: 0;
+      padding: 0;
+    }
+  }
+}
+
+h2 {
+  margin: 0;
+  padding-left: 76px;
+
+  font-family: $font-family-base;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 100px;
+  text-align: left;
+
+  color: $color-inactive;
+}
+
+@media (min-width: $breakpoint) {
+  h2 {
+    position: absolute;
+    bottom: 0;
+
+    padding-left: 40px;
+
+    pointer-events: none;
+
+    font-size: 28px;
+    line-height: 48px;
+  }
+}
+
+.contact-image {
+  &:not(.large) {
+    position: absolute;
+    bottom: 28px;
+    left: 0;
+  }
+
+  &.large {
+    position: relative;
+  }
+}
+
+@media (min-width: $breakpoint) {
+  .contact-image {
+    &.large,
+    &:not(.large) {
+      position: absolute;
+      top: 60px;
+      left: -186px;
+    }
+  }
+}
+
+.form-body {}
+
+.form-group {
+  margin-bottom: 26px;
+  padding-top: 16px;
+  border-top: 1px solid $color-primary;
+
+  &.form-group-array {
+    overflow: hidden;
+
+    &.compact {
+      .form-group-array-item {
+        padding-left: 50px;
+
+        input {
+          float: right;
+          width: 50%;
+          margin-left: 0;
+          padding-left: 0;
+
+          color: $color-inactive;
+        }
+      }
+
+      .form-group-array-item-label {
+        font-weight: 700;
+      }
+
+      .form-group-array-item-name {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@media (min-width: $breakpoint) {
+  .form-group.compact {
+    overflow: hidden;
+
+    label,
+    > input {
+      display: block;
+      float: left;
+    }
+
+    label {
+      width: 130px;
+      padding-right: 0;
+    }
+
+    input {
+      height: 22px;
+      line-height: 22px;
+    }
+  }
+  .form-group.form-group-array.compact {
+    border-top: none;
+  }
+}
+
+label {
+  display: block;
+
+  margin: 0 0 15px 0;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  color: $color-primary;
+
+  img {
+    width: 16px;
+    margin-right: 8px;
+  }
+}
+
+.compact label {
+  padding: 0 25px;
+}
+
+// TODO: Extract input field to component
+input {
+  display: block;
+
+  width: 100%;
+  height: 50px;
+
+  margin: 0 0 10px 0;
+  padding-left: 24px;
+
+  background-color: $color-white;
+  border: 1px solid $color-gray;
+  border-radius: 4px;
+  color: $color-inactive;
+
+  transition: border-color 0.2s ease-in-out;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+
+  &[disabled] {
+    width: calc(100% - 50px);
+    margin-left: 25px;
+
+    border: none;
+  }
+}
+
+@media (min-width: $breakpoint) {
+  input {
+    width: 100%;
+    max-width: 300px;
+    height: 60px;
+
+    padding-left: 30px;
+  }
+}
+
+button.button {
+  padding: 0;
+
+  background: transparent;
+  border: 1px solid transparent;
+
+  font-family: $font-family-base;
+  font-size: 18px;
+}
+
+.form-group-array-item {
+  overflow: hidden;
+}
+
+.form-group-array-item-label {
+  float: left;
+  width: calc(100% - 50px);
+}
+
+.form-group-array-item-button {
+  display: block;
+  float: left;
+
+  width: 50px;
+  height: 50px;
+
+  text-align: right;
+
+  opacity: 0.5;
+
+  button {
+    width: 31px;
+    height: 31px;
+
+    margin: 9.5px 0;
+
+    border-color: $color-inactive;
+    border-radius: 100%;
+
+    line-height: 29px;
+    color: $color-inactive;
+  }
+}
+
+@media (min-width: $breakpoint) {
+  .form-group-array-item-name {
+    float: left;
+  }
+
+  .form-group-array-item-label {
+    float: left;
+    width: 240px;
+    margin-left: 30px;
+  }
+
+  .form-group-array-item-button {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.add-number {
+  display: inline-block;
+  height: 31px;
+  margin-top: 38px;
+
+  line-height: 31px;
+  color: $color-primary;
+
+  .icon {
+    display: inline-block;
+    width: 31px;
+    height: 31px;
+
+    margin-right: 15px;
+
+    border: 1px solid $color-primary;
+    border-radius: 100%;
+
+    line-height: 29px;
+
+    text-align: center;
+    font-size: 15px;
+  }
+}
+
+@media (min-width: $breakpoint) {
+  .add-number {
+    margin-bottom: 1px;
+  }
+}
+
+.form-footer {
+  position: relative;
+  overflow: hidden;
+
+  margin-top: 68px;
+  margin-bottom: 33px;
+
+  .footer-button {
+    display: block;
+    float: left;
+
+    width: calc(50% - 2.5px);
+
+    text-align: center;
+    line-height: 42px;
+    border-radius: 21px;
+
+    color: $color-white;
+
+    &:first-child {
+      margin-right: 5px;
+    }
+
+    &.primary {
+      background-color: $color-primary;
+    }
+
+    &.inactive {
+      background-color: $color-inactive;
+    }
+  }
+}
+
+@media (min-width: $breakpoint) {
+  .form-footer {
+    width: 100%;
+    height: 42px;
+    margin-top: 104px;
+    margin-bottom: 78px;
+
+    .footer-button {
+      position: absolute;
+      top: 0;
+
+      width: 160px;
+
+      &:first-child {
+        left: 0;
+      }
+
+      &:last-child {
+        right: 0;
+      }
+    }
+  }
+}

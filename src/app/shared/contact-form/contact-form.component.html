@@ -10,7 +10,7 @@
     <!-- Actions: favorite, edit -->
     <div *ngIf="hasDelete || hasEdit || hasFavorite" class="form-contact-actions">
       <a *ngIf="hasDelete" class="fake-link" (click)="deleteAction.emit()">
-        Delete&nbsp;<img class="delete-icon" alt="Delete" src="assets/icons/icon-delete.svg">
+        <span class="delete-explanation">Delete</span>&nbsp;<img class="delete-icon" alt="Delete" src="assets/icons/icon-delete.svg">
       </a>
       <a *ngIf="hasEdit" class="fake-link" (click)="editAction.emit()">
         <img class="edit-icon" alt="Edit" src="assets/icons/icon-edit.svg">
@@ -28,8 +28,13 @@
     </div>
 
     <!-- Image and name -->
-    <div class="form-contact-header">
-      <app-contact-image [image]="image" [name]="name"></app-contact-image>
+    <div class="form-contact-header" [ngClass]="{ 'large': !locked }">
+      <app-contact-image
+        class="contact-image"
+        [ngClass]="{ 'large': !locked }"
+        [large]="locked ? false : true"
+        [image]="image"
+        [name]="name"></app-contact-image>
       <h2 *ngIf="locked" class="form-contact-name">{{ name }}</h2>
     </div>
   </div>
@@ -38,51 +43,55 @@
   <div class="form-body">
 
     <!-- Full name -->
-    <div *ngIf="!locked" class="form-group">
-      <label for="name">full name</label>
+    <div *ngIf="!locked" class="form-group" [ngClass]="{ 'compact': locked }">
+      <label for="name"><img src="assets/icons/icon-person.svg">full name</label>
       <input id="name" type="text" placeholder="Full name" formControlName="name">
     </div>
 
     <!-- Email -->
-    <div class="form-group">
-      <label for="email">email</label>
+    <div class="form-group" [ngClass]="{ 'compact': locked }">
+      <label for="email"><img src="assets/icons/icon-email.svg">email</label>
       <input id="email"
         type="email"
         placeholder="Email"
         formControlName="email"
-        [attr.disabled]="locked">
+        [attr.disabled]="locked ? true : null">
     </div>
 
     <!-- Numbers -->
-    <div class="form-group form-group-array" formArrayName="numbers">
-        <label for="numbers">numbers</label>
+    <div class="form-group form-group-array" [ngClass]="{ 'compact': locked }" formArrayName="numbers">
+        <label for="numbers"><img src="assets/icons/icon-phone.svg">numbers</label>
         <div
           class="form-group-array-item"
           *ngFor="let number of formNumbers.controls; let i = index">
           <ng-container [formGroupName]="i">
             <input type="text"
+              class="form-group-array-item-name"
               placeholder="Number"
               formControlName="number"
-              [attr.disabled]="locked">
+              [attr.disabled]="locked ? true : null">
             <input type="text"
+              class="form-group-array-item-label"
               placeholder="Label"
               formControlName="name"
-              [attr.disabled]="locked">
-            <button *ngIf="!locked"
-              class="button remove-number"
-              (click)="removeNumber($event, i)">x</button>
+              [attr.disabled]="locked ? true : null">
+            <div *ngIf="!locked" class="form-group-array-item-button">
+              <button class="button remove-number" (click)="removeNumber($event, i)">&times;</button>
+            </div>
           </ng-container>
         </div>
-        <button *ngIf="!locked"
-          class="button add-number"
-          (click)="addNumber($event)">Add number</button>
+        <a *ngIf="!locked"
+          class="fake-link add-number"
+          (click)="addNumber($event)">
+            <span class="icon">&#43;</span>Add number
+          </a>
     </div>
   </div>
 
   <!-- Form footer: cancel and save buttons -->
   <div class="form-footer" *ngIf="hasCancel || hasSave">
     <app-fatal-message *ngIf="fatal.status">{{ fatal.message }}</app-fatal-message>
-    <app-button flavour="inactive" (click)="backAction.emit()">Cancel</app-button>
-    <app-button flavour="primary" (click)="onSubmit()">Save</app-button>
+    <a class="fake-link footer-button inactive" (click)="backAction.emit()">Cancel</a>
+    <a class="fake-link footer-button primary" (click)="onSubmit()">Save</a>
   </div>
 </form>
