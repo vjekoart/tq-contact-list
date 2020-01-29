@@ -28,7 +28,6 @@ export class ActionService {
   }
 
   public deleteContact(contactId: number) {
-    // TODO: Call DialogService, and if success, call store
     this.store.deleteOne(contactId);
   }
 
