@@ -47,21 +47,6 @@ The goal of this application is to implement architecture with unidirectional da
 * *StoreService*
     * Store and expose application data via observable properties.
 
-## Roadmap
-
-1. Details page
-    * ContactFormComponent
-        * TextFieldComponent
-        * NumberFieldComponent
-        * Reuse existing ContactImage
-        * FormButtonComponent
-          * FieldLabelComponent
-          * InputFieldComponent (resue in home/favorites search)
-2. Create page with form validation
-3. Edit page with form validation
-4. Delete functionality (DeleteDialogComponent, DeleteDialogService)
-5. Add TQ favicon
-
 ---
 
 *This project is licensed under the terms of the MIT license.*
